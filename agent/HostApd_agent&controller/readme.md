@@ -7,6 +7,7 @@
 
 ##Install
  먼저 필요 패키지를 설치해야 합니다.
+ 
  `$ apt-get install bridge-utils iw hostapd isc-dhcp-server`
  
  설치 후에는 사용을 위한 **환경변수 설정**이 필요합니다.
