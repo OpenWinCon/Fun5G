@@ -3,7 +3,7 @@
 ##Introduce
 이 프로젝트는 hostapd를 관리하기 위한 프로그램과 **Openwinnet**을 관리하기 위한 컨트롤러 프로그램 입니다. 이 프로젝트의 전체 구조는 [그림 1]과 같으며 이 중 AP-agent, CLI, Controller에 대한 부분입니다.
 
-![alt tag](https://raw.github.com/OpenWinCon/OpenWinNet/tree/master/agent/HostApd_agent%26controller/img/struct.png)
+![alt tag](https://raw.github.com/OpenWinCon/OpenWinNet/blob/master/agent/HostApd_agent%26controller/img/struct.png)
 
 ##Install
  먼저 필요 패키지를 설치해야 합니다.
