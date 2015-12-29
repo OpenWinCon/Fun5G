@@ -26,9 +26,9 @@
  ...
  ‘ENGINE’: ‘mysql.connector.django’,
  ...
- ‘USER’: **‘user’**,
- ‘PASSWORD’: **‘pwd’**, 
- ‘HOST’: **‘127.0.0.1’**
+ ‘USER’: ‘(user)’,
+ ‘PASSWORD’: ‘(pwd)’, 
+ ‘HOST’: ‘(DB IP)’
  ...  
  ```
  위의 user, pwd, IP주소를 맞게 변경한 뒤 사용하여야 합니다.

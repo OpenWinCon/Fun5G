@@ -49,7 +49,7 @@
  ```
  ddns-update-style none;
  option domain-name “example.org";
- option domain-name-servers 192.168.0.1;  
+ option domain-name-servers 192.168.0.1;
 
  default-lease-time 600;
  max-lease-time 7200;
@@ -72,7 +72,7 @@
  ...
  int Report::initialize()
  ...
- m_sock.connect(**“127.0.0.1”**, PORT_NUMBER);
+ m_sock.connect(“(DB IP)”, PORT_NUMBER);
  ...
  ```
  IP를 DB 매니저가 실행 되고 있는 IP로 변경하여 줍니다.
@@ -84,7 +84,7 @@
  ...
  int main()
  ...
- dbCommand db(“**127.0.0.1**”, PORT_NUMBER);
+ dbCommand db(“(DB IP)”, PORT_NUMBER);
  ...
  ```
  
@@ -97,10 +97,10 @@
  ...
  int hostap::start()
  ...
- sprintf(temp, “ifconfig %s **192.168.1.34**” …
+ sprintf(temp, “ifconfig %s (DHCPD GATEWAY IP)” …
  ...
  ```
- 위 IP를 dhcpd의 gateway로 바꾸어 줍니다.
+ 위 IP 부분을 dhcpd의 gateway로 바꾸어 줍니다.
  
  
 ##Compile
