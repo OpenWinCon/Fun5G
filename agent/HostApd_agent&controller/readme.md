@@ -106,9 +106,11 @@
 ##Compile
 
 make를 이용하여 컴파일 해 줍니다.
+
 `$ make`
 
 실행을 위해 권한을 추가하여 줍니다.
+
 `$ chmod +x ap_agent controller command`
 
 
