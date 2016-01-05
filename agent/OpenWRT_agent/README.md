@@ -3,7 +3,7 @@
 ##Introduction
 이 프로젝트는 OpenWRT를 원격으로 관리하기 위한 프로그램과 **OpenWinNet**을 관리하기 위한 컨트롤러 프로그램 입니다. 이 프로젝트의 전체 구조는 다음과 같으며 이 중 ow_agent 대한 부분입니다.
 
-![alt tag](https://github.com/OpenWinCon/OpenWinNet/blob/master/img/struct.png)
+![alt tag](https://github.com/OpenWinCon/OpenWinNet/blob/master/img/OpenWRT-agent.png)
 
 ##Environment
 Raspberry Pi B2 OpenWRT + ipTIME N100UM Wireless LAN card
