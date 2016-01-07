@@ -100,4 +100,27 @@ edison-src/build/toFlash 하위 항목들을 edison에 flash
 `$ sudo ./flashall.sh`    
 windows 에서는 flashall.bat 실행
 
+####batctl 설치
+/etc/opkg/opkg.conf에 src edison_repo http://repo.opkg.net/edison/repo/core2-32/ 추가		
+`$ opkg update & opkg install libnl batctl `
 
+이후 과정은 PI과정과 동일(세팅파일)
+```
+$ sudo ifconfig wlan0 down
+$ sudo iwconfig wlan0 mode ad-hoc essid junho_mesh channel 8
+	//essid별로 네트워크 구축
+
+$ sudo ifconfig wlan0 up
+$ sudo modprobe batman-adv
+ //-> load batman-adv module(이거 안 할 시, Error - batman-adv module has not been loaded 뜸)
+ 
+$ sudo batctl if add wlan0
+$ sudo ifconfig wlan0 mtu 1527
+$ sudo cat /sys/class/net/wlan0/batman_adv/iface_status
+	//"active"라고 떠야한다
+
+$ sudo ifconfig bat0 up
+//ip 할당은 생략(앞 페이지 참조)
+$ sudo batctl o 
+
+````
