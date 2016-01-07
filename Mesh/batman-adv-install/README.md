@@ -61,14 +61,15 @@ $ sudo device-software/setup.sh --sdk_host=linux64
 $ source poky/oe-init-build-env
   //에러 발생 시, edison-src/build 폴더와 하위 파일에 권한 변경 후 oe-init-build-env 재시도   
   $ sudo chmod 777 edison-src/build -R
-```
+```		
+
 
 config 파일 변경 or menuconfig로 빌드 설정 변경
 ___
 #####config 파일 변경
 `$ vi edison-src/device-software/meta-edison/recipes-kernel/linux/files/defconfig`
 
-# CONFIG_BATMAN_ADV is not set 이라고 되어 있는 부분을
+"# CONFIG_BATMAN_ADV is not set" 이라고 되어 있는 부분을
 	CONFIG_BATMAN_ADV=m
 	CONFIG_BATMAN_ADV_BLA=y
 	CONFIG_BATMAN_ADV_DAT=y
