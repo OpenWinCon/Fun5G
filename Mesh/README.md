@@ -24,8 +24,8 @@ Ubuntu 12.04.5 64bit
 
 ___
 #####GOTHAM 개발 및 빌드 computer
-Mac OS X El Capitan
-Netbeans IDE 8.1
+Mac OS X El Capitan  
+Netbeans IDE 8.1  
 JAVA version : 1.8.0_40
 
 
