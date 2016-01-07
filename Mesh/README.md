@@ -6,7 +6,7 @@
 ##개발 환경
 Raspberry Pi 2
 
-Ubuntu mate 15.04 \n
+_Ubuntu mate 15.04 
 Linux-kernel version : 3.18.0-20-rpi2
 BATMAN-adv version : 2014.4.0
 BATCTL version : 2014.3.0-2
