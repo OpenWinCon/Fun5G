@@ -1,14 +1,36 @@
-GOTHAM (Gathering of Organization Treating Humble Ad-hoc Map)
+#GOTHAM (Gathering of Organization Treating Humble Ad-hoc Map)
 
+##Introduce
 BATMAN-adv visualization program
 
-
-Development Environment  :    
-  Raspberry Pi2   
-  Ubuntu mate 15.04   
-  Java 1.9.0   
-  BATMAN-adv 2014.4.0(batctl debian-2014.3.0-2)   
-  Tomcat8   
-  
-  
 This program used d3.js, websocket with JAVA.
+
+##설치
+java 설치
+```
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-java9-installer
+$ sudo apt-get install javacc
+```
+tomcat 설치 (master는 웹 서버 무조건 설치)     
+```
+$ sudo apt-get install tomcat8
+$ cd GOTHAM(vis)/settingFile
+$ cp masterWebServer.war /var/lib/tomcat8/webapps
+$ sudo service tomcat8 restart
+```
+
+
+master일 경우 - batman-adv & batctl이 무조건 동작하고 있어야 함        
+```
+$ cd GOTHAM(vis)/settingFile/master
+# sudo java -jar master.jar
+```
+
+slave일 경우 - batman-adv & batctl & master가 무조건 동작하고 있어야 함        
+```
+$ cd GOTHAM(vis)/settingFile/slave
+# sudo java -jar slave.jar
+```
+
