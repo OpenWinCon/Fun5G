@@ -12,6 +12,24 @@ BATCTL version : 2014.3.0-2
 JAVA version : 1.9.0-ea  
 Web server : TOMCAT8
 
+___
+Intel Edison yocto 2.1  
+Linux-kernel version : 3.10.17  
+BATMAN-adv version : 2013.2.0  
+BATCTL version : 2015.0
+
+___
+###Edison kernel 빌드 computer
+Ubuntu 12.04.5 64bit
+
+___
+###GOTHAM 개발 및 빌드 computer
+Mac OS X El Capitan
+Netbeans IDE 8.1
+JAVA version : 1.8.0_40
+
+
+
 ##BATMAN-adv
  BATMAN(Better Approach To Mobile Ad hoc Network)를 구현해 놓은 프로그램입니다.
  
