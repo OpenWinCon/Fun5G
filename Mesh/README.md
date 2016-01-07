@@ -19,11 +19,11 @@ BATMAN-adv version : 2013.2.0
 BATCTL version : 2015.0
 
 ___
-###Edison kernel 빌드 computer
+#####Edison kernel 빌드 computer
 Ubuntu 12.04.5 64bit
 
 ___
-###GOTHAM 개발 및 빌드 computer
+#####GOTHAM 개발 및 빌드 computer
 Mac OS X El Capitan
 Netbeans IDE 8.1
 JAVA version : 1.8.0_40
