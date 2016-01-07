@@ -7,11 +7,11 @@
 Raspberry Pi 2
 
 > Ubuntu mate 15.04 
-Linux-kernel version : 3.18.0-20-rpi2
-BATMAN-adv version : 2014.4.0
-BATCTL version : 2014.3.0-2
-JAVA version : 1.9.0-ea
-Web server : TOMCAT8
+> Linux-kernel version : 3.18.0-20-rpi2
+> BATMAN-adv version : 2014.4.0
+> BATCTL version : 2014.3.0-2
+> JAVA version : 1.9.0-ea
+> Web server : TOMCAT8
 
 ##BATMAN-adv
  BATMAN(Better Approach To Mobile Ad hoc Network)를 구현해 놓은 프로그램입니다.
