@@ -70,10 +70,10 @@ ___
 `$ vi edison-src/device-software/meta-edison/recipes-kernel/linux/files/defconfig`
 
 "# CONFIG_BATMAN_ADV is not set" 이라고 되어 있는 부분을
-	CONFIG_BATMAN_ADV=m
-	CONFIG_BATMAN_ADV_BLA=y
-	CONFIG_BATMAN_ADV_DAT=y
-	CONFIG_BATMAN_ADV_NC=y
+	CONFIG_BATMAN_ADV=m		
+	CONFIG_BATMAN_ADV_BLA=y		
+	CONFIG_BATMAN_ADV_DAT=y		
+	CONFIG_BATMAN_ADV_NC=y		
 으로 변경
 
 #####menuconfig
