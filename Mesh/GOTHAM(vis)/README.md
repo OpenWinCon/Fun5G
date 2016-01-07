@@ -34,3 +34,7 @@ $ cd GOTHAM(vis)/settingFile/slave
 # sudo java -jar slave.jar
 ```
 
+##실행
+slave 소스코드를 보면 master ip를 넣어줘야 하는 부분이 있습니다.   
+지금은 default로 192.168.0.10로 되어있습니다.   
+혹시 수정이 필요하면 변경 후 사용바랍니다.
