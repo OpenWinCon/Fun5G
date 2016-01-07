@@ -4,13 +4,13 @@
 이 부분은 batman-adv 설치 guide 및 TOX 설치 guide를 포함하고 있으며, batmand-adv로 구성된 mesh network를 visualization 할 수 있는 GOTHAM 프로젝트에 대한 부분입니다.
 
 ##개발 환경
-Raspberry Pi 2 ___
-Ubuntu mate 15.04 ___
-Linux-kernel version : 3.18.0-20-rpi2 ___
-BATMAN-adv version : 2014.4.0 ___
-BATCTL version : 2014.3.0-2 ___
-JAVA version : 1.9.0-ea ___
-Web server : TOMCAT8
+Raspberry Pi 2 
+___ Ubuntu mate 15.04 
+___ Linux-kernel version : 3.18.0-20-rpi2
+___ BATMAN-adv version : 2014.4.0
+___ BATCTL version : 2014.3.0-2
+___ JAVA version : 1.9.0-ea
+___ Web server : TOMCAT8
 
 ##BATMAN-adv
  BATMAN(Better Approach To Mobile Ad hoc Network)를 구현해 놓은 프로그램입니다.
