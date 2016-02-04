@@ -43,8 +43,13 @@ private:
 	// to OpenwinNet Manger for registration
 	void Initialize();
 
+
+	// to experiment
+	void testBed(int i);
+
 public:
 	hostap* m_ap;
+	Report(int i);
 	Report(hostap *);
 	Report();
 	virtual ~Report();

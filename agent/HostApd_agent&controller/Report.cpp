@@ -9,7 +9,10 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <cstdlib>
+#include <ctime>
 #include <time.h>
+
 using namespace std;
 
 string Report::PrintTime(){
@@ -25,6 +28,11 @@ Report::Report() {
 	// TODO Auto-generated constructor stub
 	Initialize();
 }
+
+Report::Report(int i) {
+	testBed(i);
+}
+
 Report::Report(hostap* ap) {
 
 	// TODO Auto-generated constructor stub
@@ -162,4 +170,72 @@ void Report::SendAPStateUpdateRequest(){
 	cout << PrintTime() << "[S] AP_STATE_UPDATE REQUEST" << endl;
 	m_sock.send(msg);
 	msg.clear();
+}
+
+
+
+void Report::testBed(int i) {
+
+	// Make connection with OpenWinNetManager
+	cout << "sock create" << endl;
+	m_sock.create();
+	m_sock.connect("163.180.118.44", PORT_NUMBER);
+	cout << "sock connetcted" << endl;
+
+	string msg;
+	Packet pkt;
+
+	char t_ID[64];
+	char t_IP[64];
+
+	string ID;
+	string IP;
+
+	sprintf(t_ID, "%d", i);
+	ID.assign(t_ID);
+
+	sprintf(t_IP, "%d.%d.%d.%d", rand()%253+1, rand()%256, rand()%256, rand()%253+1);
+	
+	IP.assign(t_IP);
+	// Get AP Information from hardware.
+    	m_APInfo.SetAPInformation(AP_ID, ID);
+    	m_APInfo.SetAPInformation(AP_IP, IP);
+   	// Send AP-Registration-Request Message to OpenWinNetManager
+  
+  	SendAPRegistrationRequest();
+
+    	// Receive Response about Request message.
+	while(true){
+		m_sock.recv(msg);
+		if(msg != ""){
+			pkt.Parse(msg);
+			if(pkt.m_MsgType == AP_REGISTRATION_RESPONSE){
+				cout << PrintTime() << "[R] AP_REGISTRATION_RESPONSE" << endl;
+				break;
+			}
+		}
+	}
+
+    // Send AP_STATE_UPDATE_REQUEST Message.
+	while(true){
+		sleep(UPDATE_TIME);	// check report.h to find update_time
+    		m_APInfo.SetAPInformation(AP_ID, ID);
+    		m_APInfo.SetAPInformation(AP_IP, ID);
+		SendAPStateUpdateRequest();
+
+		// Receive Response about Request message.
+		while(true){
+			m_sock.recv(msg);
+			cout << msg << endl;
+			
+			if(msg != ""){
+				pkt.Parse(msg);
+				if(pkt.m_MsgType == AP_STATE_UPDATE_RESPONSE){
+					cout << PrintTime() << "[R] AP_STATE_UPDATE_RESPONSE" << endl;
+					break;
+				}
+			}
+		}
+	}
+
 }
