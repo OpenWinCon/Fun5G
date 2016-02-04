@@ -11,8 +11,8 @@
 
 #define SERVER "localhost"
 #define USER "root"
-#define PASSWORD "rhdckaktdlTdj1!"
-#define DATABASE "openwinnet_temp"
+#define PASSWORD "mclab1"
+#define DATABASE "openwinnet"
 
 
 class Database {

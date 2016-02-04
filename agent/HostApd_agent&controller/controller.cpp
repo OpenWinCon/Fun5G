@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 		cout << "For info, please contact to roy1022@hanamil.net " << endl << endl << endl;
 	
 	
-		dbCommand db("127.0.0.1", PORT_NUMBER);
+		dbCommand db("163.180.118.44", PORT_NUMBER);
 		while(1)
 		{
 			std::cout << std::endl << "Openwinnet manager> ";

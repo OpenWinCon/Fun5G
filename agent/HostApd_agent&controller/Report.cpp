@@ -48,7 +48,7 @@ void Report::Initialize() {
 	// Make connection with OpenWinNetManager
 	cout << "sock create" << endl;
 	m_sock.create();
-	m_sock.connect("127.0.0.1", PORT_NUMBER);
+	m_sock.connect("163.180.118.44", PORT_NUMBER);
 	cout << "sock connetcted" << endl;
 
 	string msg;
