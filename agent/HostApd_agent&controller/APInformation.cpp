@@ -4,7 +4,6 @@
  */
 
 #include <string>
-#include <cstdlib>
 #include <cstring>
 #include "APInformation.h"
 using namespace std;
@@ -60,16 +59,12 @@ string APInformation::GetAPInformation(int type) {
 void APInformation::UpdateAPInformation(){
 
 	FILE *fp;
-	char buf[164];
+	char buf[64];
 	string output;
 	string temp;
 
-	char* interface = getenv("AP_INTERFACE");
-
-	sprintf(buf, "ifconfig %s | grep HWaddr", interface);
-
 	// Get ID
-	fp = popen(buf, "r");
+	fp = popen("ifconfig wlan0 | grep HWaddr", "r");
 	while (!feof(fp)) {
 		fread(buf, 1, 64, fp);
 	}
@@ -81,27 +76,15 @@ void APInformation::UpdateAPInformation(){
 	temp.clear();
 	pclose(fp);
 
-	cout << "MAC" << endl;
-
 	// Get IP
 
-
-	char * tun = getenv("TUNNEL_INTERFACE");
-	char * back = getenv("BACKBONE_INTERFACE");
-
-
-	if(tun != NULL)
-		sprintf(buf, "ifconfig %s | grep inet", tun);
-	else
-		sprintf(buf, "ifconfig %s | grep inet", back);
-	cout << buf << endl;
-	fp = popen(buf, "r");
+	fp = popen("ifconfig eth0 | grep inet", "r");
 	fread(buf, 1, 64, fp);
 	temp.assign(buf);
 	output = temp.substr(temp.find("addr:")+5);
+	output.erase(output.find("Bcast"));	
 	output.erase(output.find(" "));
 
-	//m_IP = "124.80.142.148";
 	m_IP = output;
 	cout <<"IP: " <<  m_IP << endl;
 	output.clear();
@@ -109,26 +92,27 @@ void APInformation::UpdateAPInformation(){
 	pclose(fp);
 
 	// Get SSID
-	fp = popen("iwconfig | grep ESSID", "r");
+	fp = popen("iw wlan0 info| grep ssid", "r");
 	while (!feof(fp)) {
 		fread(buf, 1, 64, fp);
 	}
 	temp.assign(buf);
-	if(temp.find("ESSID:") != std::string::npos)
+	if(temp.find("ssid") != std::string::npos)
 	{
-		output = temp.substr(temp.find("ESSID:")+7, 17);
-		output.erase(output.find("\" "));
+		output = temp.substr(temp.find("ssid")+5);
+		output.erase(output.find("\n"));
 	}
 	else
 	{
-		output ="off";
+		output = "off";
 	}
+	cout << "SSID: " << output  << endl;
 	m_SSID = output;
-	cout << "SSID: " << output << endl;
 	output.clear();
 	temp.clear();
 	pclose(fp);
 
 	//For Description
-	m_Description.assign("Test date: 2015.11.04");
+
+	m_Description.assign("The ap at mclab");
 }

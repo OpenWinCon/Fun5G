@@ -1,7 +1,7 @@
 
 /********************
- @file hostap.cpp
- @date 2015/10/11
+ @file hostap_ras.cpp
+ @date 2015/11/10
  @author 안계완
 *********************/
 
@@ -43,7 +43,13 @@ hostap::hostap(char * confpath) : confPath(confpath)
 int hostap::start()
 {
 	char temp[1024];
-	sprintf(temp, "ifconfig %s 192.168.1.34", (this->ap_conf.interface).c_str());
+	sprintf(temp, "nmcli radio wifi off");
+	system(temp);
+
+	sprintf(temp, "rfkill unblock wlan");
+	system(temp);
+
+	sprintf(temp, "ifconfig %s 192.168.2.34 up", (this->ap_conf.interface).c_str());
 	system(temp);
 	system("dhcpd");
 
@@ -257,10 +263,6 @@ void hostap::readConf()
 
 		}
 	}
-	/*
-	if(char* t = getenv("AP_INTERFACE"))
-		this->ap_conf.interface.assign(t);
-		*/
 
 }
 

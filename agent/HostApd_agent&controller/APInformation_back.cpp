@@ -4,6 +4,7 @@
  */
 
 #include <string>
+#include <cstdlib>
 #include <cstring>
 #include "APInformation.h"
 using namespace std;
@@ -59,12 +60,16 @@ string APInformation::GetAPInformation(int type) {
 void APInformation::UpdateAPInformation(){
 
 	FILE *fp;
-	char buf[64];
+	char buf[164];
 	string output;
 	string temp;
 
+	char* interface = getenv("AP_INTERFACE");
+
+	sprintf(buf, "ifconfig %s | grep HWaddr", interface);
+
 	// Get ID
-	fp = popen("ifconfig wlan0 | grep HWaddr", "r");
+	fp = popen(buf, "r");
 	while (!feof(fp)) {
 		fread(buf, 1, 64, fp);
 	}
@@ -76,37 +81,50 @@ void APInformation::UpdateAPInformation(){
 	temp.clear();
 	pclose(fp);
 
+	cout << "MAC" << endl;
+
 	// Get IP
 
-	fp = popen("ifconfig wlan0 | grep inet", "r");
+
+	char * tun = getenv("TUNNEL_INTERFACE");
+	char * back = getenv("BACKBONE_INTERFACE");
+
+
+	if(tun != NULL)
+		sprintf(buf, "ifconfig %s | grep inet", tun);
+	else
+		sprintf(buf, "ifconfig %s | grep inet", back);
+	cout << buf << endl;
+	fp = popen(buf, "r");
 	fread(buf, 1, 64, fp);
 	temp.assign(buf);
 	output = temp.substr(temp.find("addr:")+5);
 	output.erase(output.find(" "));
 
-	m_IP = "192.168.0.46";
+	//m_IP = "124.80.142.148";
+	m_IP = output;
 	cout <<"IP: " <<  m_IP << endl;
 	output.clear();
 	temp.clear();
 	pclose(fp);
 
 	// Get SSID
-	fp = popen("iw wlan0 info| grep ssid", "r");
+	fp = popen("iwconfig | grep ESSID", "r");
 	while (!feof(fp)) {
 		fread(buf, 1, 64, fp);
 	}
 	temp.assign(buf);
-	if(temp.find("ssid") != std::string::npos)
+	if(temp.find("ESSID:") != std::string::npos)
 	{
-		output = temp.substr(temp.find("ssid")+5);
-		output.erase(output.find("\n"));
+		output = temp.substr(temp.find("ESSID:")+7, 17);
+		output.erase(output.find("\" "));
 	}
 	else
 	{
-		output = "off";
+		output ="off";
 	}
-	cout << "SSID: " << output  << endl;
 	m_SSID = output;
+	cout << "SSID: " << output << endl;
 	output.clear();
 	temp.clear();
 	pclose(fp);
