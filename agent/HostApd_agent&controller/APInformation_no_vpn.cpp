@@ -78,21 +78,11 @@ void APInformation::UpdateAPInformation(){
 
 	// Get IP
 
-	/* get public IP
 	fp = popen("ifconfig eth0 | grep inet", "r");
 	fread(buf, 1, 64, fp);
 	temp.assign(buf);
 	output = temp.substr(temp.find("addr:")+5);
 	output.erase(output.find("Bcast"));	
-	output.erase(output.find(" "));
-	*/
-
-	/* get tunneling IP */
-	fp = popen("ifconfig tun0 | grep inet", "r");
-	fread(buf, 1, 64, fp);
-	temp.assign(buf);
-	output = temp.substr(temp.find("addr:")+5);
-	output.erase(output.find("P-t-P"));	
 	output.erase(output.find(" "));
 
 	m_IP = output;
