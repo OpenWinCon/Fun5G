@@ -7,6 +7,7 @@
 using namespace std;
 
 void *Thread_Client(void *sock);
+void *Thread_Heartbeat(void *trash);
 
 Database db;
 const unsigned short PORT_NUMBER = 3000;
@@ -14,7 +15,11 @@ const unsigned short PORT_NUMBER = 3000;
 int main() {
 
     pthread_t clientThread[256];
+	pthread_t HeartbeatThread;
 	int i =0;
+	char trash;
+	
+	pthread_create(&HeartbeatThread, NULL, &Thread_Heartbeat, (void *)&trash);
 
 	Socket ServSock;
 	Socket cliSock[256];
@@ -49,3 +54,9 @@ void* Thread_Client(void *sock){
 	pthread_exit(0);
 
 }
+
+void* Thread_Heartbeat(void* trash) {
+	
+	Action HB(&db);
+	pthread_exit(0);
+} 

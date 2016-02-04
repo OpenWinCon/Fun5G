@@ -28,6 +28,8 @@ public:
 
 public:
 	Action();
+	//instructor to delete db
+	Action(Database* db);
 	Action(Packet pkt, Database* db, Socket* sock);
 	virtual ~Action();
 
@@ -42,6 +44,9 @@ private:
 	//Add and update AP information on DB
 	void InsertDatabase();
 	void UpdateDatabase();
+
+	//Delete DB by TimeStamp
+	void CheckHeartbeat();
 
 	//Send response to AP
 	void SendResponseMessage(int messageType, Packet pkt);

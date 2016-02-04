@@ -20,6 +20,14 @@ Action::Action(Packet pkt, Database* db, Socket* sock){
 		TakeAction();
 	}
 }
+Action::Action(Database* db) {
+	m_db = db;
+	while(1) {
+		std::cout << "[D] Check Heartbeat" << std::endl;
+		CheckHeartbeat();
+		sleep(10);
+	}
+}
 
 Action::~Action() {
 	// TODO Auto-generated destructor stub
@@ -134,6 +142,14 @@ void Action::UpdateDatabase(){
 	query.append("';");
 
 	m_db->SendQuery(query);
+}
+
+void Action::CheckHeartbeat() {
+
+	std::string query;
+	query.assign("DELETE FROM AP_Information WHERE (time - CURRENT_TIMESTAMP) < - 30;");
+	m_db->SendQuery(query);
+
 }
 
 //Send response to AP
