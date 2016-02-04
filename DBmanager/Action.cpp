@@ -126,11 +126,13 @@ void Action::UpdateDatabase(){
 		query.append("',");
 	}
 	query.erase(query.length()-1);
+	query.append(", time=CURRENT_TIMESTAMP");
 	query.append(" WHERE ");
 	query.append(ValueTypeToString(m_GivenPkt.m_ValueType[0]));
 	query.append("='");
 	query.append(m_GivenPkt.m_Value[0]);
 	query.append("';");
+	std::cout << query << std::endl;
 
 	m_db->SendQuery(query);
 }
