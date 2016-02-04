@@ -14,7 +14,7 @@ const unsigned short PORT_NUMBER = 3000;
 
 int main() {
 
-    pthread_t clientThread[256];
+    pthread_t clientThread[800];
 	pthread_t HeartbeatThread;
 	int i =0;
 	char trash;
@@ -22,7 +22,7 @@ int main() {
 	pthread_create(&HeartbeatThread, NULL, &Thread_Heartbeat, (void *)&trash);
 
 	Socket ServSock;
-	Socket cliSock[256];
+	Socket cliSock[800];
 	ServSock.create();
 	ServSock.bind(PORT_NUMBER);
 	ServSock.listen();
