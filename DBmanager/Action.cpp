@@ -132,7 +132,6 @@ void Action::UpdateDatabase(){
 	query.append("='");
 	query.append(m_GivenPkt.m_Value[0]);
 	query.append("';");
-	std::cout << query << std::endl;
 
 	m_db->SendQuery(query);
 }
