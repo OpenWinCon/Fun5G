@@ -125,7 +125,32 @@ void Action::InsertDatabase(){
 //Update AP Information on DB
 void Action::UpdateDatabase(){
 	std::string query;
-	query.assign("UPDATE AP_Information SET ");
+
+	query.assign("INSERT INTO AP_Information (");
+
+	for(int i=0; i<m_GivenPkt.m_paramNo; i++){
+		query.append(ValueTypeToString(m_GivenPkt.m_ValueType[i]));
+		query.append(",");
+	}
+	//query.erase(query.length()-1);
+	query.append("time");
+	query.append(") VALUES ('");
+
+	for(int i=0; i<m_GivenPkt.m_paramNo; i++){
+			query.append(m_GivenPkt.m_Value[i]);
+			query.append("','");
+	}
+	query.erase(query.length()-1);
+	query.append("CURRENT_TIMESTAMP");
+	//query.erase(query.length()-2);
+	query.append(") ON DUPLICATE KEY ");
+
+	//m_db->SendQuery(query);
+
+
+
+	//query.assign("UPDATE AP_Information SET ");
+	query.append("UPDATE ");
 
 	for(int i=1; i<m_GivenPkt.m_paramNo; i++){
 		query.append(ValueTypeToString(m_GivenPkt.m_ValueType[i]));
@@ -134,12 +159,15 @@ void Action::UpdateDatabase(){
 		query.append("',");
 	}
 	query.erase(query.length()-1);
-	query.append(", time=CURRENT_TIMESTAMP");
+	query.append(", time=CURRENT_TIMESTAMP;");
+	/*
 	query.append(" WHERE ");
 	query.append(ValueTypeToString(m_GivenPkt.m_ValueType[0]));
 	query.append("='");
 	query.append(m_GivenPkt.m_Value[0]);
 	query.append("';");
+	*/
+	//std::cout << query << std::endl;
 
 	m_db->SendQuery(query);
 }
@@ -147,7 +175,7 @@ void Action::UpdateDatabase(){
 void Action::CheckHeartbeat() {
 
 	std::string query;
-	query.assign("DELETE FROM AP_Information WHERE (time - CURRENT_TIMESTAMP) < - 30;");
+	query.assign("DELETE FROM AP_Information WHERE (time - CURRENT_TIMESTAMP) <= - 30;");
 	m_db->SendQuery(query);
 
 }
