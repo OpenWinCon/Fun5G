@@ -1,0 +1,97 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4 (0x4)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=KR, ST=KK, L=Yong-in, O=MCLab, OU=OpenwinnetMCLAB, CN=MCLab CA/name=openwinnet/emailAddress=danielahn@khu.ac.kr
+        Validity
+            Not Before: Feb 11 06:56:09 2016 GMT
+            Not After : Feb  8 06:56:09 2026 GMT
+        Subject: C=KR, ST=KK, L=Yong-in, O=MCLab, OU=OpenwinnetMCLAB, CN=client1/name=openwinnet/emailAddress=danielahn@khu.ac.kr
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:e2:66:f5:02:97:0d:47:a4:17:26:24:89:71:3a:
+                    ef:bd:b4:7a:d3:41:af:85:57:1b:65:6f:07:be:68:
+                    94:60:c4:59:c1:4f:ec:dc:1d:47:a2:2d:86:5a:72:
+                    39:5a:64:68:ad:7e:b3:c3:67:f2:d8:e9:18:f5:3e:
+                    72:eb:0e:fe:b5:ae:4e:dc:aa:08:99:0c:bf:14:87:
+                    94:36:8d:6c:4a:3c:79:92:7f:13:df:7c:40:de:a8:
+                    e9:9c:eb:d6:b1:13:22:24:32:57:06:3e:df:5f:3d:
+                    b9:ae:bc:10:65:f7:d7:d6:41:6a:bf:c9:29:45:ad:
+                    a0:d3:7d:8d:b2:66:0a:83:9f:3d:33:4c:40:4d:f6:
+                    e6:ef:62:a5:f3:51:a8:bf:05:79:c0:20:fb:5b:44:
+                    a3:6c:87:be:67:13:c7:d9:d6:6f:84:cf:07:dd:73:
+                    5b:bd:73:79:80:62:b5:34:4f:07:dc:e2:df:da:b2:
+                    01:db:66:78:01:c8:f9:58:83:21:a8:14:05:40:74:
+                    1f:13:22:fa:e8:16:09:ba:f9:fe:a4:92:ee:60:e1:
+                    2c:4d:4a:99:d1:23:f8:de:a5:24:4b:80:20:ac:69:
+                    c3:55:5c:6e:c6:37:e0:dd:78:6f:5e:21:18:20:f7:
+                    dc:d5:a5:69:4a:f4:39:41:ca:34:49:08:a8:8f:79:
+                    a6:2b
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                E9:86:3D:7A:CB:A0:96:2E:BA:AF:B4:96:CD:44:FC:A4:89:3D:5B:D2
+            X509v3 Authority Key Identifier: 
+                keyid:B1:2B:B6:73:25:E8:1F:77:4D:93:7A:4E:1F:66:7C:91:98:B1:B9:E6
+                DirName:/C=KR/ST=KK/L=Yong-in/O=MCLab/OU=OpenwinnetMCLAB/CN=MCLab CA/name=openwinnet/emailAddress=danielahn@khu.ac.kr
+                serial:87:D4:9C:CD:03:9F:E1:D4
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+            X509v3 Subject Alternative Name: 
+                DNS:client1
+    Signature Algorithm: sha256WithRSAEncryption
+         83:b0:13:01:a0:45:9a:df:7b:3f:6f:3e:e5:f6:b5:ad:aa:4d:
+         cd:7d:22:c2:9d:12:d7:0d:06:15:55:0a:fe:71:23:04:07:7c:
+         31:1a:25:0b:a9:9a:95:e1:dc:0d:a4:d6:88:83:46:d4:bd:ce:
+         d0:e7:17:91:5f:0b:ba:42:e5:db:26:e4:c3:c6:d3:0e:35:89:
+         6b:77:62:3b:35:5f:8b:d9:a1:1d:f5:52:ac:51:93:8b:97:36:
+         91:e7:11:08:75:e4:40:9b:e0:2b:5c:7b:ba:6d:91:d4:7b:d9:
+         e4:3e:85:3c:53:88:c9:2b:a7:a9:e7:36:35:12:38:04:4f:dc:
+         f2:4e:46:76:d2:9b:11:19:27:48:61:9d:c5:72:31:ca:2e:39:
+         dd:58:1b:d2:50:25:7d:c0:f8:93:f1:4e:d1:a6:00:0c:ad:65:
+         51:08:e3:ef:94:09:ea:e9:ef:8d:7f:5f:48:43:9e:f9:79:e7:
+         88:7f:6e:41:f3:f8:c7:29:af:a5:c8:e7:d4:7f:97:d7:25:87:
+         a2:3f:38:cd:0e:69:86:c8:6c:b1:23:f4:33:1c:f2:b6:7e:fb:
+         d8:78:a7:97:f8:56:14:36:12:d4:0b:af:38:f9:60:b6:75:24:
+         12:f3:9c:70:3e:a2:9d:34:f7:9c:fc:72:d9:45:38:fd:27:5b:
+         d5:7f:08:8b
+-----BEGIN CERTIFICATE-----
+MIIFLzCCBBegAwIBAgIBBDANBgkqhkiG9w0BAQsFADCBojELMAkGA1UEBhMCS1Ix
+CzAJBgNVBAgTAktLMRAwDgYDVQQHEwdZb25nLWluMQ4wDAYDVQQKEwVNQ0xhYjEY
+MBYGA1UECxMPT3Blbndpbm5ldE1DTEFCMREwDwYDVQQDEwhNQ0xhYiBDQTETMBEG
+A1UEKRMKb3Blbndpbm5ldDEiMCAGCSqGSIb3DQEJARYTZGFuaWVsYWhuQGtodS5h
+Yy5rcjAeFw0xNjAyMTEwNjU2MDlaFw0yNjAyMDgwNjU2MDlaMIGhMQswCQYDVQQG
+EwJLUjELMAkGA1UECBMCS0sxEDAOBgNVBAcTB1lvbmctaW4xDjAMBgNVBAoTBU1D
+TGFiMRgwFgYDVQQLEw9PcGVud2lubmV0TUNMQUIxEDAOBgNVBAMTB2NsaWVudDEx
+EzARBgNVBCkTCm9wZW53aW5uZXQxIjAgBgkqhkiG9w0BCQEWE2RhbmllbGFobkBr
+aHUuYWMua3IwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDiZvUClw1H
+pBcmJIlxOu+9tHrTQa+FVxtlbwe+aJRgxFnBT+zcHUeiLYZacjlaZGitfrPDZ/LY
+6Rj1PnLrDv61rk7cqgiZDL8Uh5Q2jWxKPHmSfxPffEDeqOmc69axEyIkMlcGPt9f
+PbmuvBBl99fWQWq/ySlFraDTfY2yZgqDnz0zTEBN9ubvYqXzUai/BXnAIPtbRKNs
+h75nE8fZ1m+Ezwfdc1u9c3mAYrU0Twfc4t/asgHbZngByPlYgyGoFAVAdB8TIvro
+Fgm6+f6kku5g4SxNSpnRI/jepSRLgCCsacNVXG7GN+DdeG9eIRgg99zVpWlK9DlB
+yjRJCKiPeaYrAgMBAAGjggFtMIIBaTAJBgNVHRMEAjAAMC0GCWCGSAGG+EIBDQQg
+Fh5FYXN5LVJTQSBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFOmGPXrL
+oJYuuq+0ls1E/KSJPVvSMIHXBgNVHSMEgc8wgcyAFLErtnMl6B93TZN6Th9mfJGY
+sbnmoYGopIGlMIGiMQswCQYDVQQGEwJLUjELMAkGA1UECBMCS0sxEDAOBgNVBAcT
+B1lvbmctaW4xDjAMBgNVBAoTBU1DTGFiMRgwFgYDVQQLEw9PcGVud2lubmV0TUNM
+QUIxETAPBgNVBAMTCE1DTGFiIENBMRMwEQYDVQQpEwpvcGVud2lubmV0MSIwIAYJ
+KoZIhvcNAQkBFhNkYW5pZWxhaG5Aa2h1LmFjLmtyggkAh9SczQOf4dQwEwYDVR0l
+BAwwCgYIKwYBBQUHAwIwCwYDVR0PBAQDAgeAMBIGA1UdEQQLMAmCB2NsaWVudDEw
+DQYJKoZIhvcNAQELBQADggEBAIOwEwGgRZrfez9vPuX2ta2qTc19IsKdEtcNBhVV
+Cv5xIwQHfDEaJQupmpXh3A2k1oiDRtS9ztDnF5FfC7pC5dsm5MPG0w41iWt3Yjs1
+X4vZoR31UqxRk4uXNpHnEQh15ECb4Ctce7ptkdR72eQ+hTxTiMkrp6nnNjUSOARP
+3PJORnbSmxEZJ0hhncVyMcouOd1YG9JQJX3A+JPxTtGmAAytZVEI4++UCerp741/
+X0hDnvl554h/bkHz+Mcpr6XI59R/l9clh6I/OM0OaYbIbLEj9DMc8rZ++9h4p5f4
+VhQ2EtQLrzj5YLZ1JBLznHA+op0095z8ctlFOP0nW9V/CIs=
+-----END CERTIFICATE-----
