@@ -19,10 +19,10 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "protocol.h"
-#include "hostap.h"
-#include "Report.h"
-#include "ctrCommand.h"
+#include "../protocol.h"
+#include "../hostap.h"
+#include "../Report.h"
+#include "../ctrCommand.h"
 
 using namespace std;
 
