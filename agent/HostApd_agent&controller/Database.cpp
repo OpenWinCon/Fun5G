@@ -85,3 +85,32 @@ void Database::ShowTable(std::string tableName){
 		cout << endl;
 	}
 }
+
+void Database::PrintDB() 
+{
+	string result = this->GetResult("select ID, IP, SSID from AP_Information;");
+	string temp;
+
+	cout << setfill('-') << setw(34) << "[Openwinnet AP LIST]" << setw(17) << "" << endl;
+	cout << setfill(' ') << left << "|" << setw(19) << "ID" << setw(16) <<"IP" << setw(14) << "SSID" << "|" << endl;
+
+	while(true)
+	{
+		string id, ip, ssid;
+		id = result.substr(0, result.find('|'));
+		result.erase(0, result.find('|')+1);
+
+		ip = result.substr(0, result.find('|'));
+		result.erase(0, result.find('|')+1);
+
+		ssid = result.substr(0, result.find('|'));
+		result.erase(0, result.find('|')+1);
+
+		cout << "|" << setw(19) << id << setw(16) << ip << setw(14) << ssid << "|" << endl;
+
+		if(result.length() < 1) break;
+	}
+
+	cout << setfill('-') << setw(51) << "" << endl;
+
+}

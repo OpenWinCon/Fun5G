@@ -23,7 +23,6 @@ Action::Action(Packet pkt, Database* db, Socket* sock){
 Action::Action(Database* db) {
 	m_db = db;
 	while(1) {
-		std::cout << "[D] Check Heartbeat" << std::endl;
 		CheckHeartbeat();
 		sleep(10);
 	}

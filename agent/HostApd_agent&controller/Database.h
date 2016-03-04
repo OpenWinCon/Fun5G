@@ -25,6 +25,7 @@ public:
 	virtual ~Database();
 	void SendQuery(std::string query);
 	void ShowTable(std::string tableName);
+	void PrintDB();
 	std::string GetResult(std::string query);
 };
 
