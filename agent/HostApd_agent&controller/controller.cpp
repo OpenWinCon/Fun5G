@@ -23,16 +23,24 @@
 #include "Report.h"
 #include "Packet.h"
 #include "Socket.h"
+#include "Action.h"
+#include "Database.h"
 #include "protocol.h"
-#include "dbCommand.h"
 
 using namespace std;
 enum { max_length = 1024 };
+
+void *Thread_DB(void *sock);
+void *Thread_Client(void *sock);
+void *Thread_Heartbeat(void *trash);
+
+Database db;
 
 void disconnect(int signum)
 {
 	exit(0);
 }
+
 
 int main(int argc, char* argv[])
 {
@@ -46,13 +54,16 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 
-		cout << endl << endl << "Openwinnet Controller v0.6" << endl;
+		cout << endl << endl << "Openwinnet Controller v0.8" << endl;
 		cout << "Copyright 2015 Kyung Hee University Mobile Convergence Lab" << endl;
 		cout << "All rights reserved." << endl;
 		cout << "For info, please contact to roy1022@hanamil.net " << endl << endl << endl;
 	
 	
-		dbCommand db("163.180.118.44", PORT_NUMBER);
+		char trash;
+		pthread_t dbThread;
+		pthread_create(&dbThread, NULL, &Thread_DB, (void *)&trash);
+	//	dbCommand DB("163.180.118.44", PORT_NUMBER);
 		while(1)
 		{
 			std::cout << std::endl << "Openwinnet manager> ";
@@ -66,7 +77,7 @@ int main(int argc, char* argv[])
 			cin.getline(request, max_length);
 			if(cand == "db" || cand == "show")
 			{
-				db.showDB();
+				db.PrintDB();
 				continue;
 			}
 			sprintf(command, "./command %s %s", cand.c_str(), request+1);
@@ -95,4 +106,50 @@ int main(int argc, char* argv[])
 	}
 
 	return 0;
+}
+
+void *Thread_DB(void *sock)
+{
+	pthread_t clientThread[800];
+	pthread_t HeartbeatThread;
+	int i = 0;
+	char trash;
+
+	pthread_create(&HeartbeatThread, NULL, &Thread_Heartbeat, (void *)&trash);
+	Socket ServSock;
+	Socket cliSock[800];
+	ServSock.create();
+	ServSock.bind(PORT_NUMBER);
+	ServSock.listen();
+
+	while(ServSock.accept(cliSock[++i])) {
+		cout << i << endl;
+		pthread_create(&clientThread[i], NULL, &Thread_Client, (void *)&cliSock[i]);
+	}
+}
+
+void *Thread_Client(void *sock) {
+	
+	cout << "Accept connection" << endl;
+	Socket* socket = (Socket *)sock;
+
+	while(true) 
+	{
+		string msg;
+		Packet pkt;
+		socket->recv(msg);
+		if(msg != "") {
+			pkt.Parse(msg);
+			cout << "[R] (" << pkt.m_MsgType <<") " << pkt.CreateMessage() << endl;
+			Action act(pkt, &db, (Socket *)sock);
+			msg = "";
+		}
+	}
+	pthread_exit(0);
+}
+
+void *Thread_Heartbeat(void *trash)
+{
+	Action HB(&db);
+	pthread_exit(0);
 }
