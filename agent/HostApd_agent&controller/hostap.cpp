@@ -49,7 +49,7 @@ int hostap::start()
 	sprintf(temp, "rfkill unblock wlan");
 	system(temp);
 
-	sprintf(temp, "ifconfig %s 192.168.2.34 up", (this->ap_conf.interface).c_str());
+	sprintf(temp, "ifconfig %s 192.168.1.34 up", (this->ap_conf.interface).c_str());
 	system(temp);
 	system("dhcpd");
 
