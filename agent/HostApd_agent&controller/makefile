@@ -14,7 +14,7 @@ command: Command.o ctrCommand.o hostap.o APInformation.o
 	$(CPP) -o $@ $? $(LDFLAGS) 
 
 ap_agent: ap_agent.o ctrCommand.o hostap.o Report.o Packet.o Socket.o APInformation.o
-	$(CPP) -o $@ $? $(LDFLAGS) 
+	$(CPP) -o $@ $? $(CFLAGS) $(LDFLAGS) 
 
 controller: controller.o hostap.o Report.o Packet.o Socket.o APInformation.o Action.o Database.o
 	$(CPP) -o $@ $? $(CFLAGS) $(LDFLAGS)
