@@ -1,0 +1,11 @@
+{
+  "db_server": {
+    "host":"localhost",
+    "user":"root",
+    "passwd":"mclab1",
+    "db":"openwinnet"
+  },
+  "api_server": {
+    "port":18000
+  }
+}
