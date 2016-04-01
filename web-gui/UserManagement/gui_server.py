@@ -23,7 +23,7 @@ def user_list():
 
 @app.route('/ap/')
 def redir():
-  return redirect("http://163.180.118.44:8000")
+  return redirect('http://www.naver.com', code=302)
   
 
 

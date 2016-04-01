@@ -4,7 +4,7 @@
     "port":27017
   },
   "api_server": {
-    "port":18000
+    "port":8002
   },
   "gui_server": {
     "port":8001

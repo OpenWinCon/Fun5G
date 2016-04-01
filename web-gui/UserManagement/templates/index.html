@@ -3,15 +3,16 @@
   <head>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="/static/js/home.js"></script>
     <title>User Management Web GUI</title>
   </head>
   <body ng-app="webApp" ng-controller="homeCtrl">
 
-  <h3>User Management Page</h3>
+  {% include 'header.html' %}
 
+  <h3>User Management Page</h3>
   <table class="table table-striped">
     <thead>
       <tr>
