@@ -13,16 +13,25 @@ from django.db import models
 
 
 class ApInformation(models.Model):
-    id = models.CharField(db_column='ID', primary_key=True, max_length=17)  # Field name made lowercase.
-    description = models.CharField(db_column='Description', max_length=256, blank=True, null=True)  # Field name made lowercase.
-    power = models.CharField(db_column='Power', max_length=3, blank=True, null=True)  # Field name made lowercase.
-    ssid = models.CharField(db_column='SSID', max_length=256)  # Field name made lowercase.
+    id = models.CharField(db_column='ID', primary_key=True, max_length=20)  # Field name made lowercase.
     ip = models.CharField(db_column='IP', max_length=15)  # Field name made lowercase.
+    ssid = models.CharField(db_column='SSID', max_length=256)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=256, blank=True, null=True)  # Field name made lowercase.
     password = models.CharField(db_column='Password', max_length=256, blank=True, null=True)  # Field name made lowercase.
+    broadcast = models.CharField(db_column='Broadcast', max_length=3)  # Field name made lowercase.
     channel = models.CharField(db_column='Channel', max_length=2)  # Field name made lowercase.
-    broadcast = models.CharField(db_column='Broadcast', max_length=4)  # Field name made lowercase.
-    mode = models.CharField(db_column='Mode', max_length=2)  # Field name made lowercase.
+    time = models.DateTimeField()
 
     class Meta:
         managed = False
         db_table = 'AP_Information'
+
+
+class DjangoMigrations(models.Model):
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'

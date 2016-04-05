@@ -140,7 +140,7 @@ void *Thread_Client(void *sock) {
 		socket->recv(msg);
 		if(msg != "") {
 			pkt.Parse(msg);
-			cout << "[R] (" << pkt.m_MsgType <<") " << pkt.CreateMessage() << endl;
+		//	cout << "[R] (" << pkt.m_MsgType <<") " << pkt.CreateMessage() << endl;
 			Action act(pkt, &db, (Socket *)sock);
 			msg = "";
 		}

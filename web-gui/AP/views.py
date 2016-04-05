@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 
 
-cmd = '/home/dan/project/controller/command'
+cmd = '/home/mclab/openwinnet/OpenWinNet/agent/HostApd_agent&controller/command'
 
 def process_method(IP, SSID, chSS, PW, chPW, CH, chCH, BROAD, chBC):
         if chSS != '':

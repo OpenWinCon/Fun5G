@@ -183,6 +183,4 @@ void Action::CheckHeartbeat() {
 void Action::SendResponseMessage(int messageType, Packet pkt){
 	pkt.DecideMessageType(messageType);
 	m_sock->send(pkt.CreateMessage());
-	std::cout << "[S] (" << pkt.m_MsgType << ") ";
-	std::cout << pkt.CreateMessage() << std::endl;
 }

@@ -1,3 +1,5 @@
+import os
+
 os.system("ifconfig wlan0 down")
 os.system("iwconfig wlan0 mode ad-hoc essid junho-batman channel 8")
 os.system("ifconfig wlan0 up")

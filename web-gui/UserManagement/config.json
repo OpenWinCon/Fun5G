@@ -1,0 +1,12 @@
+{
+  "db_server": {
+    "host":"0.0.0.0",
+    "port":27017
+  },
+  "api_server": {
+    "port":8002
+  },
+  "gui_server": {
+    "port":8001
+  }
+}
