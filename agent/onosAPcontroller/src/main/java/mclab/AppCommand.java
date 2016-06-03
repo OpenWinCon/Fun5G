@@ -29,13 +29,8 @@ import org.apache.karaf.shell.commands.Argument;
 @Command(scope = "onos", name = "apcontrol",
          description = "Sample Apache Karaf CLI command")
 public class AppCommand extends AbstractShellCommand {
-
     @Argument(index = 0, name = "command or ip", description = "APControlCommand", required = false, multiValued = false)
     private String apCommand = null;
-
-    //@Argument(index = 1, name = "APID", description = "Device ID of switch", required = false, multiValued = false)
-    //private String APID = null;
-
     @Argument(index = 1, name = "ip or value", description = "command or target ip", required = false, multiValued = false)
     private String arg1 = null; 
     @Argument(index = 2, name = "value", description = "target ip or value", required = false, multiValued = false)
@@ -88,11 +83,8 @@ public class AppCommand extends AbstractShellCommand {
 			    InputStream in = sock.getInputStream();
 			    BufferedInputStream br = new BufferedInputStream(in);
 
-
 			    String sendMessage = MakeMessage(mType, param);
 
-			
-			
 			    byte[] send = sendMessage.getBytes();
 			    bo.write(send);
 			    bo.flush();
@@ -123,16 +115,16 @@ public class AppCommand extends AbstractShellCommand {
     @Override
     protected void execute() {
 	if (apCommand.equals("help") || apCommand.equals("h")) {
+			//TODO: make help command.
 			print("help");
 		}
     		else if (apCommand.equals("show")) {
+    			//TODO: make show command
 			print("show");
 		}
 		else if (apCommand.equals("clear")) {
+			//TODO: make cli clear command
 			print("clear");
-		}
-		else if (apCommand.equals("quit")) {
-			print("quit");
 		}
 		else {
 			if( validIP(apCommand) ) {
