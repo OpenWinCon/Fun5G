@@ -132,7 +132,7 @@ ctrCommand::ctrCommand(Msg& cmd, hostap* ap)
 			else
 			{
 				isSuccess = false;
-				errorM = "hostapd already is running\n";
+				errorM = "hostapd already is running\r\n";
 			}
 			break;
 		case STOP_AP:
@@ -142,7 +142,7 @@ ctrCommand::ctrCommand(Msg& cmd, hostap* ap)
 			else
 			{
 				isSuccess = false;
-				errorM = "hostapd is not running\n";
+				errorM = "hostapd is not running\r\n";
 			}
 			break;
 		case REBOOT:
@@ -160,7 +160,7 @@ ctrCommand::ctrCommand(Msg& cmd, hostap* ap)
 			if(isSuccess = ap->set_ssid(string(cmd.param)))
 				ap->restart();
 			else
-				errorM = "SSID must be over 1 character\n";
+				errorM = "SSID must be over 1 character\r\n";
 			break;
 		case CHANGE_PWD:
 			cout << "[R] Recieve Change Password Command " << endl;
@@ -170,7 +170,7 @@ ctrCommand::ctrCommand(Msg& cmd, hostap* ap)
 				ap->restart();
 			}
 			else
-				errorM = "Password must be over 8 characters\n";
+				errorM = "Password must be over 8 characters\r\n";
 			break;
 		case OFF_PWD:
 			cout << "[R] Recieve Paswword OFF Command " << endl;
@@ -182,14 +182,14 @@ ctrCommand::ctrCommand(Msg& cmd, hostap* ap)
 			if(isSuccess = ap->set_channel(string(cmd.param)))
 				ap->restart();
 			else
-				errorM = "Channel must be in range ( 1 ... 11 )\n";
+				errorM = "Channel must be in range ( 1 ... 11 )\r\n";
 			break;
 		case CHANGE_MODE:
 			cout << "[R] Recieve Change Mode Command " << endl;
 			if(isSuccess = ap->set_hwmode(string(cmd.param)))
 				ap->restart();
 			else
-				errorM = "Mode must be 'g' or 'b'\n";
+				errorM = "Mode must be 'g' or 'b'\r\n";
 			break;
 		case CHANGE_HIDE:
 			cout << "[R] Recieve Change Hide Command " << endl;
@@ -203,7 +203,7 @@ ctrCommand::ctrCommand(Msg& cmd, hostap* ap)
 			cout << "[R] Recieve UPLINK" << endl;
 			break;
 		default:
-			errorM = "Incorrect Command\n";
+			errorM = "Incorrect Command\r\n";
 			break;
 	}
 
@@ -221,6 +221,7 @@ ctrCommand::ctrCommand(Msg& cmd, hostap* ap)
 		}
 		if(ap->isHide())
 			strcat(cmd.param, "Hide: true\n");
+		strcat(cmd.param, "\r\n");
 	}
 	else
 		strcpy(cmd.param, errorM.c_str());

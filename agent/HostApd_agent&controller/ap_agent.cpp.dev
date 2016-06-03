@@ -19,7 +19,6 @@
 
 #include "protocol.h"
 #include "hostap.h"
-#include "Report.h"
 #include "ctrCommand.h"
 
 using namespace std;
@@ -31,11 +30,6 @@ hostap* ap;			//AP object to control hostap
 
 int serv_sock, clnt_sock;
 	
-void* Thread_Sender(void *arg)
-{
-	Report sender(ap);
-	pthread_exit(0);
-}
 
 void* Thread_Commander(void *arg)
 {
@@ -53,6 +47,7 @@ void* Thread_Commander(void *arg)
 			cout << "socket() error\n";
 			exit(1);
 		}	
+
 
 		memset(&serv_adr, 0, sizeof(serv_adr));
 		serv_adr.sin_family = AF_INET;
@@ -75,40 +70,43 @@ void* Thread_Commander(void *arg)
 
 		while(1)
 		{
-			char message[1024];
+			char te[1024];
 			clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);
 			if(clnt_sock == -1)
 			{
 				cout << "accept() error\n";
 				exit(1);
 			}
-			
 			Msg cmd;
-			
-			int len = read(clnt_sock,message, sizeof(message));
-			message[len] = 0;
-			
+			int len = read(clnt_sock,te, sizeof(te));
+			te[len] = 0;
 			cout << "[R] Receivced Command" << endl;
 
-			if(message[0] == '|')
+			if(te[0] == '|')
 			{
-				char* cand;
+				//parse onos cmd
+				char* result;
 				
-				cand = strtok(message, "|");
-				cmd.mtype = (msg_types)atoi(cand);
-
-				cand = strtok(NULL, "|");
-				strcpy(cmd.param, cand);
+				result = strtok(te, "|");
+				cout << result << endl;
+				cmd.mtype = (msg_types)atoi(result);
+				cout << cmd.mtype << endl;
+				result = strtok(NULL, "|");
+				strcpy(cmd.param, result);
 
 			}
 			else
 			{
-				memcpy(&cmd, message, len);
+				memcpy(&cmd, te, len);
+
 			}
-			cout << cmd.mtype << " " << cmd.param << endl;
+
+			//cout << te << endl;
+			cout << cmd.mtype << cmd.param << endl;
 			ctrCommand(cmd, ap);
 			cout << "[P] Processed Command" << endl;
-			if( write(clnt_sock, (char *)&cmd, sizeof(cmd)) < 0)  
+			//if( write(clnt_sock, re, strlen(re)) < 0)  
+			if( write(clnt_sock, (char *)&cmd, sizeof(cmd)) < 0)
 			{
 				perror("write");
 				break;
@@ -161,10 +159,10 @@ int main(int argc, char* argv[])
 		cout << "All rights reserved." << endl;
 		cout << "For info, please contact to roy1022@hanamil.net " << endl << endl << endl;
 
-		pthread_create(&sender, NULL, &Thread_Sender, (void *)NULL);
+//		pthread_create(&sender, NULL, &Thread_Sender, (void *)NULL);
 		pthread_create(&commander, NULL, &Thread_Commander, (void *)NULL);
 
-		pthread_join(sender, NULL);
+//		pthread_join(sender, NULL);
 		pthread_join(commander, NULL);	
 	}
 	catch (std::exception& e)
