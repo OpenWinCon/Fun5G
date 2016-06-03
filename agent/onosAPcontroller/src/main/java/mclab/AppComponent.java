@@ -36,6 +36,13 @@ public class AppComponent {
     @Activate
 	    protected void activate() {
 		    try {
+		    	/*****************************
+		    	 * TODO:
+		    	 * 1. make db thread
+		    	 * 2. make db command
+		    	 * 3. make heartbeat 
+			 * 4. make show command
+		    	 * ***************************/
 			    log.info("Started");
 		    }
 		    catch(Exception e)
