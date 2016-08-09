@@ -4,11 +4,19 @@ package mclab;
 
 import java.net.*;
 import java.io.*; 
+import mclab.*;
 
 
 public class DBThread extends Thread{
 
 	private Socket connectionSocket;
+	
+	public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
+	public static final String MYSQL_URL = "jdbc:mysql://163.180.118.44:3306/AP_Information?"
+	public static final String MYSQL_USER = "";
+	public static final String MYSQL_PASSWORD = "";
+	
+	private MySQLdb db = null;
 
 	private static final int AP_REGISTRATION_REQUEST = 0;
 	private static final int AP_REGISTRATION_RESPONSE = 1;
@@ -19,33 +27,25 @@ public class DBThread extends Thread{
 	private static final int AP_TERMINATE_REQUEST = 6;
 	private static final int AP_TERMINATE_RESPONSE = 7;
 
-
-	private static final int AP_ID = 0;
-	private static final int AP_IP = 1;
-	private static final int AP_SSID = 2;
-	private static final int AP_DESCRIPTION = 3;
-	private static final int AP_PASSWORD = 4;
-	private static final int AP_HIDE = 5;
-	private static final int AP_CHANNEL = 6;
-
 	private static final int END_OF_MESSAGE = 99;
 
-	private static final String delimiter = "|";
+	private static final String delimiter = "\\|";
 
 
 
 	public DBThread(Socket connectionSocket) {
 		this.connectionSocket = connectionSocket;
+		db = new MySQLdb(MYSQL_DRIVER,MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD);
 	}
+	
 	protected String MakeMessage(int mType, String param) {
 		return String.format("%d|%s|99", mType, param);
 	}
+	
 	public int byteToint(byte[] arr){
 		return (arr[0] & 0xff)<<24 | (arr[1] & 0xff)<<16 |
 				(arr[2] & 0xff)<<8 | (arr[3] & 0xff);
 	}
-	
-
 
 	@Override
 	public void run() {
@@ -62,7 +62,6 @@ public class DBThread extends Thread{
 				BufferedOutputStream bo = new BufferedOutputStream(out);
 
 
-
 				byte[] recv = new byte[1024];
 				int length = br.read(recv);
 
@@ -70,9 +69,15 @@ public class DBThread extends Thread{
 				String message = new String(recv, 0, length);
 				System.out.println(message);
 
-				String parser[] = message.split(delimiter);
+				String parser[];
+				parser = message.split(delimiter);
+				
 				int msg_type = Integer.parseInt(parser[0]);
-
+				
+				
+				AP ap = new AP(parser);
+				//AP ap = parseAP(parser);
+				
 				String sendMessage = null;
 
 				/*
@@ -82,13 +87,13 @@ public class DBThread extends Thread{
 				switch(msg_type) {
 
 				case AP_REGISTRATION_REQUEST:
-					//INSERT DB
+					db.insert(ap);
 					sendMessage = MakeMessage(AP_REGISTRATION_RESPONSE, "");
 					break;
 				case AP_REGISTRATION_RESPONSE:
 					break;
 				case AP_STATE_UPDATE_REQUEST:
-					//UPDATE DB
+					db.update(ap);
 					sendMessage = MakeMessage(AP_STATE_UPDATE_RESPONSE, "");
 					break;
 				case AP_STATE_UPDATE_RESPONSE:
