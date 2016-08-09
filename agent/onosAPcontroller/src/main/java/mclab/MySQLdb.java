@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import mclab.*;
  
 public class MySQLdb 
 {
@@ -37,25 +38,42 @@ public class MySQLdb
 	        
 	    }
 	    
-	    public void insert(String Message) {
-	    	/*
-	    	 * QUERY: INSERT INTO AP_Information (IP, SSID, Description. Password, Broadcast, Channel, time) VALUES (ip, ssid, desc, pass, broad, chan, CURRENT_TIMESTAMP);
-	    	 */
-	    	
+	    public void insert(AP ap) {
+	    	try{
+	    		/*
+	    		String query = "INSERT INTO AP_Information (";
+	    		query += ap.GetTypes();
+	    		query += ", time) VALUES (";
+	    		query += ap.GetValues();
+	    		query += ", CURRENT_TIMESTAMP)";
+	    		*/
+	    		String query = ap.makeInsertQuery();
+	    		System.out.println(query);
+	    		statement.executeUpdate(query);
+	    	}catch(Exception ex){
+	    		ex.printStackTrace();
+	    	}
+
 	    }
 	    
-	    public void update(String Message) {
-	    	/*
-	    	 * QUERY: INSERT INTO AP_Information (IP, SSID, Description. Password, Broadcast, Channel, time) VALUES (ip, ssid, desc, pass, broad, chan, CURRENT_TIMESTAMP) ON DUPLICATE KEY;
-	    	 */
+	    public void update(AP ap) {
+	    	try{
+	    		String query = ap.makeUpdateQuery();
+	    		statement.executeUpdate(query);
+	    	}catch(Exception ex){
+	    		ex.printStackTrace();
+	    	}
 	 
 	    }
 	    
 	    
 	    public void heartbeat() {
-	    	/*
-	    	 * QUERY: DELETE FROM AP_Information WHERE (time - CURRENT_TIMESTAMP) <= -30; 
-	    	 */
+	    	try{
+	    		String query = "DELETE FROM AP_Information WHERE (time - CURRENT_TIMESTAMP) <= -30";
+	    		statement.executeUpdate(query);
+	    	}catch(Exception ex){
+	    		ex.printStackTrace();
+	    	}
 	 
 	    }
 	    
