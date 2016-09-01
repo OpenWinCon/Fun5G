@@ -19,20 +19,19 @@ import org.json.simple.JSONObject;
 
 /**
  *
- * @author junhoya924
+ * @author junhoya924@khu.ac.kr
  */
 public final class Update extends CommonGround{
     private static String[] c_originator;
     private static String[] c_nextHop;
     
     /*
-     * input void
-     * parsing from status.txt file, get Originator and nexthop information
-     * output void
-     */
-    public Update() throws Exception {
-
-        //m_matrixInstance.printMatrix(m_myMAC);
+         * input  - void                     
+         * doing  - making web responding thread
+                    update status periodically
+         * output - void
+     */    
+    public Update() throws Exception {        
         webWaitingThread mainWebWaitingThread = new webWaitingThread();
         mainWebWaitingThread.start();
         
@@ -40,16 +39,15 @@ public final class Update extends CommonGround{
             System.out.println("start updateStatus");
             updateStatus();
 
-            m_matrixInstance.removeNode(c_originator);
+            m_matrixInstance.removeOrigin(c_originator);
 
             for (String c_originator1 : c_originator) {
-                m_matrixInstance.addNode(c_originator1);
+                m_matrixInstance.addOrigin(c_originator1);
             }
             System.out.println("After addnode function");
 
             for (String c_nextHop1 : c_nextHop) {
-                m_matrixInstance.addNode(c_nextHop1);
-                //m_nodeList.add(c_nextHop1);
+                m_matrixInstance.addOrigin(c_nextHop1);                
             }
 
             m_matrixInstance.updateNextHop(m_myMAC, c_nextHop);
@@ -61,6 +59,11 @@ public final class Update extends CommonGround{
         }
     }
     
+    /*
+         * input  - void                     
+         * doing  - update status from batman_adv
+         * output - void
+     */ 
     public void updateStatus() throws Exception {
         String command = command = "batctl o";
         shellCmd(command, "status.txt");//command 실행 및 status.txt파일로 write
@@ -111,8 +114,12 @@ public final class Update extends CommonGround{
 
     }
     
+    /*
+         * input  - void                     
+         * doing  - web waiting thread class
+         * output - void
+     */ 
     public class webWaitingThread extends Thread {
-
         private ServerSocket c_webSocket;
         private Socket c_connectionSocket;
 
@@ -136,7 +143,6 @@ public final class Update extends CommonGround{
 
     //Communication class with web
     public class communicationWeb extends Thread {
-
         private Socket c_conectionSocket;
         private Matrix c_matrixInstance;
 
@@ -147,7 +153,6 @@ public final class Update extends CommonGround{
 
         @Override
         public void run() {
-
             try {
                 DataOutputStream outToClient = new DataOutputStream(c_conectionSocket.getOutputStream());// 소켓의 출력스트림을 얻는다
                 DataInputStream dis;
@@ -163,19 +168,19 @@ public final class Update extends CommonGround{
                     outToClient.writeUTF(String.valueOf(c_matrixInstance.getNodeCount()));
                     
                     System.out.println("before jsonObj & get node cout : " + c_matrixInstance.getNodeCount());
-                     System.out.println("getNodeList(0) : " + c_matrixInstance.getNodeList().get(0));
-                     System.out.println("getNodeList(0) : " + c_matrixInstance.getNodeList().get(1));
-                     System.out.println("getNodeList(0) : " + c_matrixInstance.getNodeList().get(2));
+                     System.out.println("getNodeList(0) : " + c_matrixInstance.getOriginList().get(0));
+                     System.out.println("getNodeList(0) : " + c_matrixInstance.getOriginList().get(1));
+                     System.out.println("getNodeList(0) : " + c_matrixInstance.getOriginList().get(2));
                     JSONObject jsonObj = new JSONObject();
                     JSONArray jsonArray = new JSONArray();
 
                     for (int i = 0; i < c_matrixInstance.getNodeCount(); i++) {
                         System.out.println(i + " : for function");
                         JSONObject tempJsonObj = new JSONObject();
-                        tempJsonObj.put("name", c_matrixInstance.getNodeList().get(i));
-                        if (m_masterMAC.equalsIgnoreCase(c_matrixInstance.getNodeList().get(i))) {
+                        tempJsonObj.put("name", c_matrixInstance.getOriginList().get(i));
+                        if (m_masterMAC.equalsIgnoreCase(c_matrixInstance.getOriginList().get(i))) {
                             tempJsonObj.put("group", 2);
-                        } else if (c_matrixInstance.getOutNodeList().contains(c_matrixInstance.getNodeList().get(i))) {
+                        } else if (c_matrixInstance.getOutNodeList().contains(c_matrixInstance.getOriginList().get(i))) {
                             tempJsonObj.put("group", 3);
                         } else {
                             tempJsonObj.put("group", 1);

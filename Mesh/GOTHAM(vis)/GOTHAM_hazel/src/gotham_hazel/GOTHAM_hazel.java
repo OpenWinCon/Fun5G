@@ -12,41 +12,41 @@ import com.hazelcast.core.Client;
 import com.hazelcast.core.ClientListener;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import java.net.Socket;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  *
- * @author junhoya924
+ * @author junhoya924@khu.ac.kr
  */
 public class GOTHAM_hazel extends CommonGround {
-
     private static boolean m_isMaster = false;
     private static String m_wlanInterface;
 
-   
     private static String m_masterIP = "192.168.0.10";
     private static String m_masterPort = "5701";
 
-    /**
+    /*
      * main
      *
-     * @param args the command line arguments args[0] : interface name args[1] :
-     * boolean master=1, slave=2 args[2] : master ip address
+     * @param args the command line arguments 
+                    args[0] : interface name        {ex) wlan0}
+                    args[1] : 1(master), 2(slave)   {ex) 1}
+                    args[2] : master ip address     {ex) 192.168.0.10}
      */
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
 
         initializing(args);
         
-        
         System.out.println("before update");
         Update m_update = new Update();
     }
 
+    /*
+         * input  - arguments from user(initialArgs) : String[]                     
+         * doing  - initialize basic things and get shared list from hazelcast in-memory grid
+         * output - void
+     */
     public static void initializing(String[] initialArgs) throws Exception {
         m_wlanInterface = initialArgs[0];
         m_masterIP = initialArgs[2];
@@ -64,14 +64,18 @@ public class GOTHAM_hazel extends CommonGround {
         
         m_matrixInstance = new Matrix(m_matrix, m_nodeList, m_outNodeList, MAX_NODE, m_isMaster);
         m_matrixInstance.nodeIn(m_myMAC);
-
     }
 
+    /*
+         * input  - void                     
+         * doing  - hazelcast setting in master node
+         * output - void
+     */
     public static void hazel_master() {
         Config cfg = new Config();
         HazelcastInstance instance = Hazelcast.newHazelcastInstance(cfg);
 
-       instance.getClientService().addClientListener(new ClientListner());
+       instance.getClientService().addClientListener(new ClientListener_impl());
        
         m_matrix = new List[MAX_NODE];
         for (int i = 0; i < MAX_NODE; i++) {
@@ -88,6 +92,11 @@ public class GOTHAM_hazel extends CommonGround {
         
     }
 
+    /*
+         * input  - void                     
+         * doing  - hazelcast setting in slave node
+         * output - void
+     */
     public static void hazel_slave() {
         ClientConfig clientConfig = new ClientConfig();
         clientConfig.addAddress(m_masterIP + ":" + m_masterPort);
@@ -113,12 +122,15 @@ public class GOTHAM_hazel extends CommonGround {
         
     }
     
-    public static class ClientListner implements ClientListener {
-
+    /*
+         * input  -                    
+         * doing  - hazelcast client listener
+         * output - 
+     */
+    public static class ClientListener_impl implements ClientListener {
         @Override
         public void clientConnected(Client client) {
-            System.out.println("client connected : " + client.toString());
-            
+            System.out.println("client connected : " + client.toString());            
         }
 
         @Override
@@ -126,11 +138,7 @@ public class GOTHAM_hazel extends CommonGround {
             System.out.println("client disconnected : " + client.toString());
             m_matrixInstance.nodeOut(m_mapClientMac.get(client.getUuid()));
             m_mapClientMac.remove(client.getUuid());
-            
-            
-        }
-        
-    }
-            
-            
+           
+        }        
+    }   
 }
