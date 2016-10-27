@@ -26,7 +26,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <onos.version>1.5.2-SNAPSHOT</onos.version>
+        <onos.version>1.5.0-SNAPSHOT</onos.version>
         <onos.app.name>khu.mclab.onosAPcontroller</onos.app.name>
         <onos.app.title>APcontroller</onos.app.title>
         <onos.app.origin>khu.mclab</onos.app.origin>
@@ -95,14 +95,15 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.34</version>
+	    <scope>provided</scope>
          </dependency>
-    </dependencies>
+	 </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
+	 <build>
+	 <plugins>
+	 <plugin>
+	 <groupId>org.apache.felix</groupId>
+	 <artifactId>maven-bundle-plugin</artifactId>
                 <version>3.0.1</version>
                 <extensions>true</extensions>
             </plugin>

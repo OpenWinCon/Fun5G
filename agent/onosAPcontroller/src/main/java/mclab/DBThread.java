@@ -4,7 +4,7 @@ package mclab;
 import java.net.*;
 import java.util.concurrent.*;
 import java.io.*; 
-import qqq.tteq.*;
+import mclab.*;
 
 
 public class DBThread extends Thread{
@@ -19,6 +19,8 @@ public class DBThread extends Thread{
 	
 	private MySQLdb db = null;
 	private ExecutorService executor;
+	private	ServerSocket listenSocket; 
+	
 
 	private static final int AP_REGISTRATION_REQUEST = 0;
 	private static final int AP_REGISTRATION_RESPONSE = 1;
@@ -42,9 +44,10 @@ public class DBThread extends Thread{
 	}
 
 
-	public DBThread(MySQLdb db, ExecutorService executor) {
+	public DBThread(MySQLdb db, ExecutorService executor, ServerSocket listenSocket) {
 		this.db = db;
 		this.executor = executor;
+		this.listenSocket = listenSocket;
 	}
 
 
@@ -60,10 +63,8 @@ public class DBThread extends Thread{
 	@Override
 	public void run() {
 		try {
-
+			listenSocket = new ServerSocket(12015);
 			System.out.println("Start");
-			ServerSocket listenSocket = new ServerSocket(12015);
-
 			Socket connectionSocket;
 			packetHandler packetHandlerThread;
 
@@ -77,6 +78,7 @@ public class DBThread extends Thread{
 			e.printStackTrace();
 		}
 	}
+
 
 	private class packetHandler implements Runnable {
 
