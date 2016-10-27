@@ -42,15 +42,11 @@ public class AppComponent {
     protected final String MYSQL_PASSWORD = "mclab1";
 
     protected MySQLdb db = null;
+    protected HeartbeatThread ht = null;
     protected ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     protected ThreadPoolExecutor conExecutor;
     protected ServerSocket ls;
-
-    protected void heartbeatThread() {
-    		db.heartbeat();
-		//onos.print("heartbeat");
-    }
-
+	
     @Activate
     protected void activate() {
 	    try {
@@ -58,16 +54,18 @@ public class AppComponent {
 			System.out.println("makedb");
 	    		//ls = new ServerSocket(12015);
 			//print("serverSocket");
-			executor.scheduleAtFixedRate(this::heartbeatThread, 1, 5, TimeUnit.SECONDS);
+            ht = new HeartbeatThread(db);
+            
+			executor.scheduleAtFixedRate(ht, 1, 5, TimeUnit.SECONDS);
 
 			conExecutor = (ThreadPoolExecutor)Executors.newCachedThreadPool();
 			conExecutor.execute(new DBThread(db, conExecutor, ls));
 			//print("ddd");
 		    /*****************************
 		     * TODO:
-		     * 1. make db thread
-		     * 2. make db command
-		     * 3. make heartbeat 
+		     * 1. make db thread - done
+		     * 2. make db command - done
+		     * 3. make heartbeat - done
 		     * 4. make show command
 		     * ***************************/
 		    log.info("Started");
