@@ -20,5 +20,5 @@
      features="apcontroller">
     <description>ONOS OSGi bundle archetype</description>
     <artifact>mvn:khu.mclab/apcontroller/1.0-SNAPSHOT</artifact>
-<!--    <artifact>mvn:mysql/mysql-connector-java/5.1.34</artifact>-->
+    <artifact>mvn:mysql/mysql-connector-java/5.1.34</artifact>
 </app>

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1477529382288
+Bnd-LastModified: 1478050367038
 Build-Jdk: 1.8.0_72
 Built-By: mclab
 Bundle-Blueprint: OSGI-INF/blueprint/shell-config.xml
@@ -9,11 +9,11 @@ Bundle-Name: apcontroller
 Bundle-SymbolicName: khu.mclab.apcontroller
 Bundle-Version: 1.0.0.SNAPSHOT
 Created-By: Apache Maven Bundle Plugin
-Export-Package: mclab;uses:="org.apache.karaf.shell.commands,org.onospro
- ject.cli";version="1.0.0"
+Export-Package: khu.mclab;uses:="org.apache.karaf.shell.commands,org.ono
+ sproject.cli";version="1.0.0"
 Import-Package: org.apache.karaf.shell.commands;version="[3.0,4)",org.on
  osproject.cli;version="[1.5,2)",org.osgi.service.blueprint;version="[1.
  0.0,2.0.0)",org.slf4j;version="[1.6,2)"
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
-Service-Component: OSGI-INF/mclab.AppComponent.xml
+Service-Component: OSGI-INF/khu.mclab.AppComponent.xml
 Tool: Bnd-3.0.0.201509101326

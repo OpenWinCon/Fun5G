@@ -18,7 +18,8 @@
     <feature name="apcontroller" version="1.0-SNAPSHOT"
              description="ONOS OSGi bundle archetype">
         <feature>onos-api</feature>
-	<feature>mysql-connector-java</feature>
         <bundle>mvn:khu.mclab/apcontroller/1.0-SNAPSHOT</bundle>
+	<bundle>mvn:mysql/mysql-connector-java/5.1.34</bundle>
     </feature>
+
 </features>
