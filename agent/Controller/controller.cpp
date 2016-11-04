@@ -30,9 +30,9 @@
 using namespace std;
 enum { max_length = 1024 };
 
-void *Thread_DB(void *sock);
-void *Thread_Client(void *sock);
-void *Thread_Heartbeat(void *trash);
+//void *Thread_DB(void *sock);
+//void *Thread_Client(void *sock);
+//void *Thread_Heartbeat(void *trash);
 
 Database db;
 
@@ -61,9 +61,8 @@ int main(int argc, char* argv[])
 	
 	
 		char trash;
-		pthread_t dbThread;
-		pthread_create(&dbThread, NULL, &Thread_DB, (void *)&trash);
-	//	dbCommand DB("163.180.118.44", PORT_NUMBER);
+//		pthread_t dbThread;
+//		pthread_create(&dbThread, NULL, &Thread_DB, (void *)&trash);
 		while(1)
 		{
 			std::cout << std::endl << "Openwinnet manager> ";
@@ -95,7 +94,6 @@ int main(int argc, char* argv[])
 			string result = output.str();
 			cout << result;
 			pclose(fp);
-			//system(command);
 			bzero(request, sizeof(request));
 			
 		}
@@ -107,6 +105,8 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+/*
 
 void *Thread_DB(void *sock)
 {
@@ -152,4 +152,4 @@ void *Thread_Heartbeat(void *trash)
 {
 	Action HB(&db);
 	pthread_exit(0);
-}
+}*/

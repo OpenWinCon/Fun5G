@@ -8,6 +8,14 @@ function init_lib() {
 	cd ../
 }
 
+function install_DB() {
+	echo "Install DB-agent"
+	cd ./DB-agent
+	make clean
+	make
+	echo "done"
+	cd ../
+}
 function install_Controller() {
 	echo "Install Controller"
 	cd ./Controller
@@ -30,11 +38,11 @@ function all_clean() {
 	echo "cleaning.."
 	cd ./lib
 	make clean
-	cd ../
-	cd ./Controller
+	cd ../Controller
 	make clean
-	cd ../
-	cd ./AP-agent
+	cd ../DB-agent
+	make clean
+	cd ../AP-agent
 	make clean
 	cd ../
 }
@@ -49,6 +57,7 @@ else
 		init_lib
 		install_Controller
 		install_AP
+		install_DB
 	else
 		if [ $1 == "all" ]; then
 			init_lib
@@ -57,6 +66,7 @@ else
 		elif [ $1 == "controller" ]; then
 			init_lib
 			install_Controller
+			install_DB
 		elif [ $1 == "ap" -o $1 == "ap_agent" -o $1 == "AP_agent" ]; then
 			init_lib
 			install_AP
