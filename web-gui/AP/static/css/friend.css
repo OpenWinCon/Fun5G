@@ -1,0 +1,17 @@
+
+.friends_area{
+    width:100%;
+	padding:5px;
+    border-bottom: #f1f1f1 solid 1px;
+	vertical-align:middle;
+    }
+.f_name b{
+	font-size:14px;
+	color:#000000;
+	cursor:pointer;
+	}
+.f_name{
+	font-size:14px;
+	color:#666;
+	vertical-align:middle;
+	}

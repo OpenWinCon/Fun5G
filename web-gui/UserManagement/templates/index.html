@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="/static/js/home.js"></script>
+    <title>User Management Web GUI</title>
+  </head>
+  <body ng-app="webApp" ng-controller="homeCtrl">
+
+  {% include 'header.html' %}
+
+  <h3>User Management Page</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>User Priority</th>
+        <th>Registered Devices</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in users">
+        <td>{[ user.uid ]}</td>
+        <td>{[ user.uname ]}</td>
+        <td>{[ user.priority ]}</td>
+        <td><span ng-repeat="device in user.devices">{[device]}{[$last ? '': ',']}</td>
+        <td>
+          <button class="btn" ng-click="editUser(user)">
+            <span class="glyphicon glyphicon-pencil"></span>  Edit
+          </button>
+
+          <button class="btn btn-danger" ng-click="delUser(user)">
+          <span class="glyphicon glyphicon-remove"></span> Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+  <button class="btn btn-success" ng-click="editUser('new')">
+  <span class="glyphicon glyphicon-user"></span>  Create New User
+  </button>
+
+  <!--
+  <button class="btn btn-primary" ng-click="updateChanges('new')">
+  <span class="glyphicon glyphicon-upload"></span>  Save Changes
+  </button>
+
+  <button class="btn btn-danger" ng-click="refresh()">
+  <span class="glyphicon glyphicon-refresh"></span>  Discard Changes
+  </button>
+  -->
+
+  <hr>
+
+  <form class="form-horizontal" ng-hide="hideform">
+    <h3 ng-show="edit">Create New User:</h3>
+    <h3 ng-hide="edit">Edit User:</h3>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">User ID:</label>
+      <div class="col-sm-10">
+      <input type="text" ng-model="submit_form.uid" ng-disabled="!edit" placeholder="User ID">
+      </div>
+    </div> 
+    <div class="form-group">
+      <label class="col-sm-2 control-label">User Name:</label>
+      <div class="col-sm-10">
+      <input type="text" ng-model="submit_form.uname" placeholder="User Name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">User Priority</label>
+      <div class="col-sm-10">
+      <select name="priority" id="priority" ng-model="submit_form.priority">
+        <option value="">---Select Priority---</option>
+        <option ng-repeat="option in options.priority" value={[option.id]}>{[option.name]}</option>
+      </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Devices</label>
+      <div class="col-sm-10">
+      <label ng-repeat="device in options.devices">
+        <input id="{[device]}" type="checkbox" value="{[device]}" ng-checked="submit_form.devices.indexOf(device) > -1" ng-click="toggleSelection(device)" /> {[device]}
+      </label>
+      </div>
+    </div>
+    <hr>
+    <button class="btn btn-success" ng-disabled="incomplete" ng-click="submit();">
+    <span class="glyphicon glyphicon-save"></span>  Save Changes
+    </button>
+  </form>
+
+  </body>
+</html>
