@@ -127,7 +127,7 @@ def first_random_setting(ipSetting):
    setting_value =[version, masterIP, ssid, channel]
    return setting_value
 
-def setting_network():
+def setting_network(isGWserver):
    print("----------setting_network----------")
    
    os.system("service network-manager stop")
@@ -138,6 +138,8 @@ def setting_network():
    time.sleep(10)
    os.system("modprobe batman-adv")
    time.sleep(5)
+   if(isGWserver!=F):
+      setting_backhole()
 
 def setting_batman(ifname, isGWserver, ssid, channel):
    print("----------setting_batman----------")
@@ -156,10 +158,10 @@ def setting_batman(ifname, isGWserver, ssid, channel):
                                 
    time.sleep(5)
                                     
-   if(isGWserver == "T"):
-      os.system("batctl -m bat" + bat_number +" gw server")
-   else:
+   if(isGWserver == "F"):
       os.system("batctl -m bat" + bat_number +" gw client")
+   else:
+      os.system("batctl -m bat" + bat_number +" gw server")
 
 def setting_OVS(isGWserver, ipSetting):
    print("----------setting_OVS----------")
@@ -167,9 +169,9 @@ def setting_OVS(isGWserver, ipSetting):
    os.system("ovs-vsctl add-br br0")
    os.system("ifconfig br0 up")
 
-   if(isGWserver == "T"):
-      os.system("ovs-vsctl add-port br0 eth0")
-      os.system("ifconfig eth0 0")
+   if(isGWserver != "F"):
+      os.system("ovs-vsctl add-port br0 " + isGWserver)
+      os.system("ifconfig " + isGWserver + " 0")
 
    if(ipSetting == "F"):
       print("----------get ip from DHCP server----------")
@@ -189,17 +191,24 @@ def setting_AP():
    time.sleep(5)
 
 def setting_GOTHAM_main_master():
-   os.system("java -jar GOTHAM_hazel.jar wlan0 1 192.168.10.10")
+   os.system("java -jar GOTHAM_hazel.jar wlan0 1 192.168.1.10")
 
 def setting_GOTHAM_main_slave():
-    os.system("java -jar GOTHAM_hazel.jar wlan0 2 192.168.10.10")
+   os.system("java -jar GOTHAM_hazel.jar wlan0 2 192.168.1.10")
+
+def setting_backhole():
+   os.system("ifconfig wlan1 up")
+   time.sleep(2)
+   os.system("iw dev wlan1 connect FUN5G-AP#2")
+#  os.system("dhclient wlan1")
+#  time.sleep(5)
 
 #[T or F] : Beacon setting or Default setting
-#[T or F] : GW server or Not
+#[interface name(eth0) or F] : GW server or Not
 #[T or F] : AP mode
 #[M or S or F] : GOTHAM_main start
 #[interface name(wlan0)] : mesh interface name
-#[F or IP(193.168.10.10)] : DHCP or Static IP
+#[F or IP(193.168.1.10)] : DHCP or Static IP
 #[interface name(wlan1) or F] : second mesh inteface(defualt control plane)
 if __name__ == "__main__":
    argvCount = len(sys.argv)
@@ -214,7 +223,7 @@ if __name__ == "__main__":
    ipSetting = sys.argv[6]
    isSecondMesh = sys.argv[7]
 
-   setting_network()
+   setting_network(isGWserver)
    if(startWithBeacon == "T"):
       print("----------start GOTHAM with beacon----------")
       beaconExisting=searching_beacon()
@@ -222,8 +231,9 @@ if __name__ == "__main__":
 
       if(beaconExisting[0] == "False"):
          print("beacon is not detecting")
+         ipSetting = "192.168.1.10"
          first_setting = first_random_setting(ipSetting)
-         ipSetting = "192.168.10.10"
+      
       else:
          print("beacon detecting")
          first_setting = beaconExisting
