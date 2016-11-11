@@ -6,8 +6,24 @@
 #include "../headers/Action.h"
 
 Action::Action() {
-	// TODO Auto-generated constructor stub
+	while(1) {
+		CheckHeartbeat();
+		sleep(10);
+	}
 
+}
+Action::Action(Packet pkt, Socket* sock){
+	if(pkt.m_MsgType < 0){
+		std::cout << "[E] No Information in Packet" << std::endl;
+	}
+	else{
+		Database* db = new Database();
+		m_db = db;
+		m_GivenPkt = pkt;
+		m_sock = sock;
+		TakeAction();
+		delete db;
+	}
 }
 Action::Action(Packet pkt, Database* db, Socket* sock){
 	if(pkt.m_MsgType < 0){
@@ -172,11 +188,14 @@ void Action::UpdateDatabase(){
 }
 
 void Action::CheckHeartbeat() {
+	
 
+	Database* db = new Database();
 	std::string query;
 	query.assign("DELETE FROM AP_Information WHERE (time - CURRENT_TIMESTAMP) <= - 30;");
-	m_db->SendQuery(query);
-
+	//m_db->SendQuery(query);
+	db->SendQuery(query);
+	delete db;
 }
 
 //Send response to AP

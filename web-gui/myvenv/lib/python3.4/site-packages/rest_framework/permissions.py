@@ -5,6 +5,9 @@ from __future__ import unicode_literals
 
 from django.http import Http404
 
+from rest_framework.compat import is_authenticated
+
+
 SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
 
 
@@ -33,6 +36,7 @@ class AllowAny(BasePermission):
     permission_classes list, but it's useful because it makes the intention
     more explicit.
     """
+
     def has_permission(self, request, view):
         return True
 
@@ -43,7 +47,7 @@ class IsAuthenticated(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return request.user and request.user.is_authenticated()
+        return request.user and is_authenticated(request.user)
 
 
 class IsAdminUser(BasePermission):
@@ -64,7 +68,7 @@ class IsAuthenticatedOrReadOnly(BasePermission):
         return (
             request.method in SAFE_METHODS or
             request.user and
-            request.user.is_authenticated()
+            is_authenticated(request.user)
         )
 
 
@@ -126,7 +130,7 @@ class DjangoModelPermissions(BasePermission):
 
         return (
             request.user and
-            (request.user.is_authenticated() or not self.authenticated_users_only) and
+            (is_authenticated(request.user) or not self.authenticated_users_only) and
             request.user.has_perms(perms)
         )
 
@@ -150,7 +154,6 @@ class DjangoObjectPermissions(DjangoModelPermissions):
     This permission can only be applied against view classes that
     provide a `.queryset` attribute.
     """
-
     perms_map = {
         'GET': [],
         'OPTIONS': [],

@@ -1,4 +1,4 @@
-#!/home/mclab/openwinnet/OpenWinNet/web-gui/myvenv/bin/python3.4
+#!/home/mclab/OpenWinNet/web-gui/myvenv/bin/python3
 from django.core import management
 
 if __name__ == "__main__":
