@@ -30,6 +30,7 @@ public:
 	Action();
 	//instructor to delete db
 	Action(Database* db);
+	Action(Packet pkt, Socket* sock);
 	Action(Packet pkt, Database* db, Socket* sock);
 	virtual ~Action();
 

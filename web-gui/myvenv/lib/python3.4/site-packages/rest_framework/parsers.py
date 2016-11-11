@@ -35,7 +35,6 @@ class BaseParser(object):
     All parsers should extend `BaseParser`, specifying a `media_type`
     attribute, and overriding the `.parse()` method.
     """
-
     media_type = None
 
     def parse(self, stream, media_type=None, parser_context=None):
@@ -51,7 +50,6 @@ class JSONParser(BaseParser):
     """
     Parses JSON-serialized data.
     """
-
     media_type = 'application/json'
     renderer_class = renderers.JSONRenderer
 
@@ -73,7 +71,6 @@ class FormParser(BaseParser):
     """
     Parser for form data.
     """
-
     media_type = 'application/x-www-form-urlencoded'
 
     def parse(self, stream, media_type=None, parser_context=None):
@@ -91,7 +88,6 @@ class MultiPartParser(BaseParser):
     """
     Parser for multipart form data, which may include file data.
     """
-
     media_type = 'multipart/form-data'
 
     def parse(self, stream, media_type=None, parser_context=None):
@@ -122,6 +118,10 @@ class FileUploadParser(BaseParser):
     Parser for file upload data.
     """
     media_type = '*/*'
+    errors = {
+        'unhandled': 'FileUpload parse error - none of upload handlers can handle the stream',
+        'no_filename': 'Missing filename. Request should include a Content-Disposition header with a filename parameter.',
+    }
 
     def parse(self, stream, media_type=None, parser_context=None):
         """
@@ -131,13 +131,15 @@ class FileUploadParser(BaseParser):
         `.data` will be None (we expect request body to be a file content).
         `.files` will be a `QueryDict` containing one 'file' element.
         """
-
         parser_context = parser_context or {}
         request = parser_context['request']
         encoding = parser_context.get('encoding', settings.DEFAULT_CHARSET)
         meta = request.META
         upload_handlers = request.upload_handlers
         filename = self.get_filename(stream, media_type, parser_context)
+
+        if not filename:
+            raise ParseError(self.errors['no_filename'])
 
         # Note that this code is extracted from Django's handling of
         # file uploads in MultiPartParser.
@@ -151,7 +153,7 @@ class FileUploadParser(BaseParser):
 
         # See if the handler will want to take care of the parsing.
         for handler in upload_handlers:
-            result = handler.handle_raw_input(None,
+            result = handler.handle_raw_input(stream,
                                               meta,
                                               content_length,
                                               None,
@@ -183,10 +185,10 @@ class FileUploadParser(BaseParser):
 
         for index, handler in enumerate(upload_handlers):
             file_obj = handler.file_complete(counters[index])
-            if file_obj:
+            if file_obj is not None:
                 return DataAndFiles({}, {'file': file_obj})
-        raise ParseError("FileUpload parse error - "
-                         "none of upload handlers can handle the stream")
+
+        raise ParseError(self.errors['unhandled'])
 
     def get_filename(self, stream, media_type, parser_context):
         """
