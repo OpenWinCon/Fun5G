@@ -5,9 +5,9 @@ import os
 
 #socket
 os.system("netstat -ntlp")
-inport socket
-skc=socket.socket()
-host="115.145.145.151"
+import socket
+soc=socket.socket()
+host="163.180.118.127"
 port=8118
 soc.bind((host,port))
 soc.listen(5)
@@ -24,10 +24,7 @@ while 1:
 		os.system("service hostapd restart")
 		os.system("service dnsmasq restart")
 		os.system("sleep 1")
-		os.system("hostapd -B /etc/hostapd/hostapd.conf.0")
-		os.system("sleep 1")
-		os.system("hostapd -B /etc/hostapd/hostapd.conf.0")
-		os.system("sleep 2")
+		os.system("hostapd -B /home/mclab/OpenWinCon/OpenWinNet/agent/AP-agent/conf/openwinnet.conf")
 		os.system("iptables -t nat -A POSTROUTING -j MASQUERADE")
 		os.system('sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"')
 	elif msg == b'\x01':	#accept list X : service (X)
@@ -35,9 +32,7 @@ while 1:
 		os.system("service hostapd restart")
 		os.system("service dnsmasq restart")
 		os.system("sleep 1")
-		os.system("hostapd -B /etc/hostapd/hostapd.conf.1")
-		os.system("sleep 1")
-		os.system("hostapd -B /etc/hostapd/hostapd.conf.1")
+		os.system("hostapd -B /home/mclab/OpenWinCon/OpenWinNet/agent/AP-agent/conf/openwinnet_access.conf")
 		os.system("sleep 2")
 		os.system("iptables -t nat -A POSTROUTING -j MASQUERADE")
 		os.system('sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"')
