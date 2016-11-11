@@ -81,9 +81,9 @@ def searching_beacon():
    os.system("hciconfig hci- up")
    time.sleep(2)
    print(">>>>>>>>>>beacon scanning<<<<<<<<<<")
-   task = subprocess.Popen("timeout 3s ./beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
+   task = subprocess.Popen("timeout 3s /etc/gotham/beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
    time.sleep(2)
-   task = subprocess.Popen("timeout 10s ./beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
+   task = subprocess.Popen("timeout 10s /etc/gotham/beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
    data = task.stdout.read()
    scan_beacon = data.split('\n')
    for i in scan_beacon:
@@ -191,10 +191,10 @@ def setting_AP():
    time.sleep(5)
 
 def setting_GOTHAM_main_master():
-   os.system("java -jar GOTHAM_hazel.jar wlan0 1 192.168.1.10")
+   os.system("java -jar /etc/gotham/GOTHAM_hazel.jar wlan0 1 192.168.1.10")
 
 def setting_GOTHAM_main_slave():
-   os.system("java -jar GOTHAM_hazel.jar wlan0 2 192.168.1.10")
+   os.system("java -jar /etc/gotham/GOTHAM_hazel.jar wlan0 2 192.168.1.10")
 
 def setting_backhole():
    os.system("ifconfig wlan1 up")
