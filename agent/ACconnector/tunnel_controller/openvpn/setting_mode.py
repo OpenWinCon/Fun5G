@@ -87,6 +87,9 @@ def del_setting():
 
 def get_settings_dic():
     try:
+        if not os.path.isdir(os.path.join(OPENVPN_FOLDER, 'settings')):
+            setting_folder = os.makedirs(os.path.join(OPENVPN_FOLDER, 'settings'))
+
         setting_file = open(os.path.join(OPENVPN_FOLDER, 'settings', 'server.settings'), 'r')
 
     except OSError:
