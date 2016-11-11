@@ -138,7 +138,7 @@ def setting_network(isGWserver):
    time.sleep(10)
    os.system("modprobe batman-adv")
    time.sleep(5)
-   if(isGWserver!=F):
+   if(isGWserver!="F"):
       setting_backhole()
 
 def setting_batman(ifname, isGWserver, ssid, channel):
