@@ -1,0 +1,4 @@
+#hostapd accept = white list
+
+00:a0:c6:eb:5c:6f
+d0:95:c7:47:09:df
