@@ -3,7 +3,10 @@
 
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
+from multiprocessing import Process
+
 import subprocess 
+import signal
 import os
 import pickle
 
@@ -105,6 +108,7 @@ class SettingManager:
 
 def make_pkt_callback(idx):
     def pkt_callback(pkt):
+        print 'Nor: ',
         print pkt
         pkt.set_mark(idx)
         pkt.accept()
@@ -119,6 +123,7 @@ def make_selective_pkt_callback(idx, filters):
     addr_type = filters['addr_type']
 
     def pkt_sel_callback(pkt):
+        print 'Sel: ', 
         print pkt
         #data = payload.get_data()
         ip_pkt = IP(pkt.get_payload())
@@ -127,6 +132,7 @@ def make_selective_pkt_callback(idx, filters):
         if ip_pkt.proto in proto_filter:
             pkt_action = proto_filter[ip_pkt.proto]
             if pkt_action == 'accept':
+                pkt.set_mark(idx)
                 pkt.accept()
                 return
 
@@ -146,6 +152,7 @@ def make_selective_pkt_callback(idx, filters):
             pkt_src_port, pkt_action = addr_filter[ip_pkt.src]
             if pkt_src_port == '*' or pkt_src_port == ip_pkt.sport:
                 if pkt_action == 'accept':
+                    pkt.set_mark(idx)
                     pkt.accept()
                     #payload.set_verdict(nfqueue.NF_ACCEPT)
 
@@ -157,6 +164,7 @@ def make_selective_pkt_callback(idx, filters):
             pkt_dst_port, pkt_action = addr_filter[ip_pkt.dst]
             if pkt_dst_port == '*' or pkt_dst_port == ip_pkt.dport:
                 if pkt_action == 'accept':
+                    pkt.set_mark(idx)
                     pkt.accept()
                     #payload.set_verdict(nfqueue.NF_ACCEPT)
 
@@ -167,8 +175,9 @@ def make_selective_pkt_callback(idx, filters):
                 elif pkt_action == 'reroute':
                     pkt.set_mark(idx)
                     pkt.accept()
-
-        #pkt.accept()
+        
+        pkt.set_mark(idx)
+        pkt.accept()
 
     return pkt_sel_callback  
 
@@ -244,24 +253,39 @@ def make_filters(inter_name):
     filters = {'addr_filter': addr_filter, 'addr_type': addr_type, 'proto_filter': proto_filter, 'proto_type': proto_type}
     return filters
 
-    
+
+def nfq_worker(nfq, idx, callback_type, filters=None):
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+
+    if callback_type == 1:
+        nfq.bind(idx, make_pkt_callback(idx))
+
+    else:
+        nfq.bind(idx, make_selective_pkt_callback(idx, filters))
+
+    nfq.run() 
+
+
 def start_forwarding(settings):
-    nfq = NetfilterQueue()
+    process_lst = []
     idx = 1
+
     for inter_name, forward_dic in sorted(settings.iteritems()):
+        nfq = NetfilterQueue()
         forward_inter, forward_mode = forward_dic['forward_inter'], forward_dic['mode']
         
         #nfq.bind(idx, lambda pkt: print pkt; pkt.set_mark(idx); pkt.accept())
-        
+        print forward_inter, forward_mode, idx 
         if forward_mode in [1,3]:
-            nfq.bind(idx, make_pkt_callback(idx))
+            nfq_pr = Process(target=nfq_worker, args=(nfq, idx, 1))
+#            nfq.bind(idx, make_pkt_callback(idx))
 
         elif forward_mode == 2:
             filters = make_filters(inter_name)
-            nfq.bind(idx, make_selective_pkt_callback(idx, filters))
+            nfq_pr = Process(target=nfq_worker, args=(nfq, idx, 2, filters))
+#            nfq.bind(idx, make_selective_pkt_callback(idx, filters))
 
-#        if inter_name == 'local' and (forward_mode == 1 or forward_mode == 2):
-#            cmd = 'iptables -t mangle -I OUTPUT -j NFQUEUE --queue-num %d' % idx
+        process_lst.append(nfq_pr)
 
         if inter_name == 'local' and forward_mode == 3:
             cmd = 'iptables -t mangle -I OUTPUT -p tcp --dport 6633 -j NFQUEUE --queue-num %d' % idx
@@ -288,15 +312,26 @@ def start_forwarding(settings):
 
         idx += 1
 
-    try:
-        print
-        print 'Start forwarding by rules'
+    print
+    print 'Start forwarding by rules'
 
-        nfq.run()
+    for pr in process_lst:
+        pr.start()
+
+    try:
+        while True:
+           time.sleep(1)
+
+#        nfq.run()
 
     except KeyboardInterrupt:
         print
-        print 'Qutting forwarding mode'
+        print 'Quitting forwarding mode'
+
+        for pr in process_lst:
+            pr.terminate()
+            pr.join()
+#        nfq.unbind()
 
         idx = 1
         for inter_name, forward_dic in sorted(settings.iteritems()):
@@ -378,7 +413,7 @@ def control_delegation():
 
         elif selection == 0:
             print
-            print 'Qutting connector program'
+            print 'Quitting connector program'
            
             return
 

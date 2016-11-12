@@ -81,9 +81,9 @@ def searching_beacon():
    os.system("hciconfig hci- up")
    time.sleep(2)
    print(">>>>>>>>>>beacon scanning<<<<<<<<<<")
-   task = subprocess.Popen("timeout 3s ./beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
+   task = subprocess.Popen("timeout 3s /etc/gotham/beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
    time.sleep(2)
-   task = subprocess.Popen("timeout 10s ./beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
+   task = subprocess.Popen("timeout 10s /etc/gotham/beacon_scan_mesh.sh", shell=True, stdout=subprocess.PIPE)
    data = task.stdout.read()
    scan_beacon = data.split('\n')
    for i in scan_beacon:
@@ -127,73 +127,103 @@ def first_random_setting(ipSetting):
    setting_value =[version, masterIP, ssid, channel]
    return setting_value
 
-def setting_batman(isGWserver, ssid, channel):
-   print("----------setting_batman----------")
-   channel_str = str(channel)
+def setting_network(isGWserver):
+   print("----------setting_network----------")
+   
    os.system("service network-manager stop")
    time.sleep(10)
    os.system("service network-manager start")
    time.sleep(10)
    os.system("service network-manager stop")
    time.sleep(10)
-
-   os.system("ifconfig wlan0 down")
-   os.system("iwconfig wlan0 mode ad-hoc essid " + ssid + " channel " + channel_str)
-   os.system("ifconfig wlan0 up")
    os.system("modprobe batman-adv")
-   os.system("batctl -m bat0 if add wlan0")
-   os.system("ifconfig wlan0 mtu 1527")
-   os.system("cat /sys/class/net/wlan0/batman_adv/iface_status")
-   os.system("ifconfig bat0 up")
-
    time.sleep(5)
+   if(isGWserver!="F"):
+      setting_backhole()
 
-   if(isGWserver == "T"):
-      os.system("batctl gw server")
+def setting_batman(ifname, isGWserver, ssid, channel):
+   print("----------setting_batman----------")
+   channel_str = str(channel)
+   bat_number = ifname[4]
+   os.system("ifconfig " + ifname + " down")
+   os.system("iwconfig " + ifname + " mode ad-hoc essid " + ssid + " channel " + channel_str)
+   print("iwconfig " + ifname + " mode ad-hoc essid " + ssid + " channel " + channel_str)
+   os.system("ifconfig " + ifname + " up")
+   time.sleep(2)
+   os.system("batctl -m bat" + bat_number +" if add " + ifname)
+   print("batctl -m bat" + bat_number +" if add " + ifname)
+   os.system("ifconfig " + ifname + " mtu 1527")
+   os.system("cat /sys/class/net/" + ifname + "/batman_adv/iface_status")
+   os.system("ifconfig bat" + bat_number +" up")
+                                
+   time.sleep(5)
+                                    
+   if(isGWserver == "F"):
+      os.system("batctl -m bat" + bat_number +" gw client")
    else:
-      os.system("batctl gw client")
+      os.system("batctl -m bat" + bat_number +" gw server")
 
 def setting_OVS(isGWserver, ipSetting):
    print("----------setting_OVS----------")
    os.system("ovs-vsctl del-br br0")
    os.system("ovs-vsctl add-br br0")
-   os.system("ovs-vsctl add-port br0 bat0")
    os.system("ifconfig br0 up")
 
-   if(isGWserver == "T"):
-      os.system("ovs-vsctl add-port br0 eth0")
-      os.system("ifconfig eth0 0")
+   if(isGWserver != "F"):
+      os.system("ovs-vsctl add-port br0 " + isGWserver)
+      os.system("ifconfig " + isGWserver + " 0")
 
    if(ipSetting == "F"):
-      print("----------get ip from HDCP server----------")
+      print("----------get ip from DHCP server----------")
       os.system("dhclient br0")
       time.sleep(10)
    else:
       os.system("ifconfig br0 " + ipSetting)
 
+def add_OVS_port(ifCount, ifname):
+   print("----------OVS_addPort----------")
+   for i in range(0, ifCount):
+      os.system("ovs-vsctl add-port br0 bat" + ifname[i][4]);
+      print(str(i) + " " + ifname[i])
+
 def setting_AP():
    task = subprocess.Popen("hostapd -dd /etc/hostapd/hostapd.conf", shell=True, stdout=subprocess.PIPE)
    time.sleep(5)
 
-def setting_GOTHAM_main():
-   os.system("java -jar GOTHAM_hazel.jar wlan0 1 192.168.10.10")
+def setting_GOTHAM_main_master():
+   os.system("java -jar /etc/gotham/GOTHAM_hazel.jar wlan0 1 192.168.1.10")
+
+def setting_GOTHAM_main_slave():
+   os.system("java -jar /etc/gotham/GOTHAM_hazel.jar wlan0 2 192.168.1.10")
+
+def setting_backhole():
+   os.system("ifconfig wlan1 up")
+   time.sleep(2)
+   os.system("iw dev wlan1 connect FUN5G-AP#2")
+#  os.system("dhclient wlan1")
+#  time.sleep(5)
 
 #[T or F] : Beacon setting or Default setting
-#[T or F] : GW server or Not
+#[interface name(eth0) or F] : GW server or Not
 #[T or F] : AP mode
-#[T or F] : GOTHAM_main start
-#[F or IP(193.168.10.10)] : DHCP or Static IP
+#[M or S or F] : GOTHAM_main start
+#[interface name(wlan0)] : mesh interface name
+#[F or IP(193.168.1.10)] : DHCP or Static IP
+#[interface name(wlan1) or F] : second mesh inteface(defualt control plane)
 if __name__ == "__main__":
    argvCount = len(sys.argv)
-   if(argvCount != 6):
+   if(argvCount != 8):
       print("----------check the parameter----------")
       sys.exit(0)
    startWithBeacon = sys.argv[1]
    isGWserver = sys.argv[2]
    isAP = sys.argv[3]
    isGOTHAM = sys.argv[4]
-   ipSetting = sys.argv[5]
+   interfaceName = sys.argv[5]
+   ipSetting = sys.argv[6]
+   isSecondMesh = sys.argv[7]
 
+   setting_network(isGWserver)
    if(startWithBeacon == "T"):
       print("----------start GOTHAM with beacon----------")
       beaconExisting=searching_beacon()
@@ -201,8 +231,9 @@ if __name__ == "__main__":
 
       if(beaconExisting[0] == "False"):
          print("beacon is not detecting")
+         ipSetting = "192.168.1.10"
          first_setting = first_random_setting(ipSetting)
-         ipSetting = "192.168.10.10"
+      
       else:
          print("beacon detecting")
          first_setting = beaconExisting
@@ -210,19 +241,30 @@ if __name__ == "__main__":
       batman_info = setting_beacon(first_setting[0], first_setting[1], first_setting[2], first_setting[3])
       batman_info_split = batman_info.split(' ')
       conv_ssid = batman_info_split[0]+batman_info_split[1]
-      setting_batman(isGWserver, conv_ssid, batman_info_split[2])
-      setting_OVS(isGWserver, ipSetting)
+
+      setting_batman(interfaceName, isGWserver, conv_ssid, batman_info_split[2])
 
    else:
       print("----------start GOTHAM without beacon----------")
-      setting_batman(isGWserver, "gotham_public", 1)
-      setting_OVS(isGWserver, ipSetting)
+      setting_batman(interfaceName, isGWserver, "gotham_public", 1)
+
+   setting_OVS(isGWserver, ipSetting)
+   
+
+   if(isSecondMesh != "F"):
+      setting_batman(isSecondMesh, "F", "gotham_private", 9)
+      ifname_array=[interfaceName, isSecondMesh]
+      add_OVS_port(2, ifname_array)
+   else:
+      ifname_array=[interfaceName, "NULL"]
+      add_OVS_port(1, ifname_array)
 
    if(isAP == "T"):
       print("----------start AP mode----------")
       setting_AP()
 
-   if(isGOTHAM =="T"):
+   if(isGOTHAM =="M"):
       print("----------start GOTHAM main----------")
-      setting_GOTHAM_main()
-
+      setting_GOTHAM_main_master()
+   elif(isGOTHAM =="S"):
+      setting_GOTHAM_main_slave()
