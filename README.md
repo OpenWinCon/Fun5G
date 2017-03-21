@@ -1,29 +1,19 @@
-# OpenWinNet
+# FUN5G - Future Unlicensed Networking for 5 Goals
+SDN/NFV enabled Centralized WiFi and Cellular Networking.
 
+FUN5G is a wireless network solution that can be configured using home PCs and Raspberry PI and open source that is easy to use and not expensive network equipment.
 
+## Features
+fun5g can build a centralized network-based SDN / NFV leverage open source software. Fun5g is a package that utilizes or modifies major open source software and includes newly developed software. The open source software used is HostAP, OpenWrt, OpenVPN, ONOS, OVS, Android, OPNFV / OpenStack, FreeRADIUS, OpenSSL, OpenBTS, OpenAirinterface and OpenEPC.
 
-## Overall Structure
-
-![alt tag](https://github.com/OpenWinCon/OpenWinNet/blob/master/img/overview.png)
-
-
-## Installation & Operation
-This is a link of each project's README file. Refer to the link for detailed information.
-
-### [Host AP Daemon Agent & Controller](https://github.com/OpenWinCon/OpenWinNet/tree/master/agent/HostApd_agent%26controller)
-
-
-
-### [OpenWRT Agent](https://github.com/OpenWinCon/OpenWinNet/tree/master/agent/OpenWRT_agent)
-
-
-
-### [DB Manager](https://github.com/OpenWinCon/OpenWinNet/blob/master/DBmanager)
-
-
-
-### [BATMAN based Mesh and P2P](https://github.com/OpenWinCon/OpenWinNet/tree/master/Mesh)
-
-
-
-### [Web GUI for OpenWinNet](https://github.com/OpenWinCon/OpenWinNet/tree/master/web-gui)
+## Related Projects.
+[Host AP Daemon Agent & Controller](https://github.com/OpenWinCon/Fun5G/tree/master/agent)
+[pi-switch](https://github.com/OpenWinCon/pi-switch)
+[TrafficOffloadingAndroidApp](https://github.com/OpenWinCon/TrafficOffloadingAndroidApp)
+[TrafficOffloadingONOS](https://github.com/OpenWinCon/TrafficOffloadingONOS)
+[ACconnector](https://github.com/OpenWinCon/ACconnector)
+[PiSTA_SKKU_NTL](https://github.com/OpenWinCon/PiSTA_0SKKU_NTL)
+[IPv6-host-mobility-management](https://github.com/OpenWinCon/IPv6-host-mobility-management)
+[ONOS-DASH-Controller](https://github.com/OpenWinCon/ONOS-DASH-Controller)
+[mobilitymgmt](https://github.com/OpenWinCon/mobilitymgmt)
+[PiAPPowerControl](https://github.com/OpenWinCon/PiAPPowerControl)
