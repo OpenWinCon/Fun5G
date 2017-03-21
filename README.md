@@ -7,6 +7,9 @@ FUN5G is a wireless network solution that can be configured using home PCs and R
 ## Features
 fun5g can build a centralized network-based SDN / NFV leverage open source software. Fun5g is a package that utilizes or modifies major open source software and includes newly developed software. The open source software used is HostAP, OpenWrt, OpenVPN, ONOS, OVS, Android, OPNFV / OpenStack, FreeRADIUS, OpenSSL, OpenBTS, OpenAirinterface and OpenEPC.
 
+## Overall structure
+![alt tag](https://github.com/OpenWinCon/Fun5G/blob/master/img/Fun5G.png)
+
 ## Related Projects.
 [Host AP Daemon Agent & Controller](https://github.com/OpenWinCon/Fun5G/tree/master/agent)
 
