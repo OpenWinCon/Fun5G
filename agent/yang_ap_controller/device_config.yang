@@ -1,0 +1,272 @@
+module device_config {
+
+	namespace "urn:device-config";
+	prefix dv;
+
+	organization
+	 "Mobile Convergence Laboratory in Kyung Hee University at South Korea.";
+
+	contact
+	 "MCLab Web:	<http://mobilelab.khu.ac.kr>
+	  MCLab chair: Sungwon Lee
+	 		<drsungwon@khu.ac.kr>";
+
+	description
+	 "ff";
+
+	/*
+	*
+	* Typedefs 
+	*
+	*/
+
+	/** collection of ieft:yang types **/
+	typedef mac-address {
+		type string {
+			pattern '[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}';
+		}
+		description
+			"The mac-address type represents an IEEE 802 MAC address.";
+	}
+	
+	typedef ipv4-address {
+		type string {
+		      pattern
+		        '(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}'
+		      +  '([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])'
+		      + '(%[\p{N}\p{L}]+)?';
+	        }
+		description
+			"The ipv4-address type represents an IPv4 address in dotted-quad notation.";
+	}
+
+	typedef ipv4-prefix {
+		type string {
+			pattern
+			  '(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}'
+		        +  '([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])'
+		        + '/(([0-9])|([1-2][0-9])|(3[0-2]))';
+		}
+		description 
+			"The ipv4-prefix type represents an IPv4 address prefix.";
+	}
+	
+	/*** Collection of our types ***/
+	typedef device-type {
+		type enumeration {
+			enum unknown {
+				value "0";
+				description
+				"An unkown or unspecified type of device.";
+			}
+			enum access-point {
+				value "1";
+				description
+				"The access-point type represents an WiFi access point in the internet.";
+			}
+			enum lora-wan {
+				value "2";
+				description
+				"The lora-wan tpe represents a LoRa WAN device in the internet.";
+			}
+		}
+		description
+			"This value represents the type of the devices.";
+	}
+	
+	typedef operating-systems {
+		type enumeration {
+			enum unkown {
+				value "0";
+				description
+				 "f";
+			}
+			enum ubuntu-mate {
+				value "1";
+				description
+				 "f";
+			}
+			enum ubuntu {
+				value "2";
+				description
+				 "f";
+			}
+			enum openwrt {
+				value "3";
+				description
+				 "f";
+			}
+
+		}
+	}
+	
+	typedef ssid {
+		type string {
+			length "1..255";
+		}
+		description
+		"This value represents WiFi ssid.";
+	}
+
+	typedef channel {
+		type string;
+		description
+		"This value represents WiFi channel.";
+	}
+
+	typedef state {
+		type string;
+	}
+
+	typedef broadcast {
+		type enumeration {
+			enum off {
+				value "0";
+				description "WiFi broadcasting off.";
+			}
+			enum on {
+				value "1";
+				description "WiFi broadcasting on.";
+			}
+		}
+	}
+
+
+	typedef mode {
+		type string {
+			length "1";
+			pattern "[bgn]";
+		}
+	}
+
+	typedef command-type {
+		type enumeration {
+			enum mNULL {
+				value "0";
+			}
+			enum START {
+				value "1";
+			}
+			enum STOP {
+				value "2";
+			}
+		}
+	}
+
+	grouping access-point {
+			leaf hw_mode { 
+				type mode;
+			}
+			leaf channel {
+				type channel;
+			}
+			leaf power-on-off {
+				type channel;
+			}
+			leaf ssid {
+				type ssid;
+			}
+			leaf ip {
+				type ipv4-address;
+			}
+	}
+	
+	/*real data*/
+	container devices {
+	/*	list network-devices {
+			key "ip";
+
+			leaf device {
+				type device-type;
+			}
+			leaf ip {
+				type ipv4-address;
+			}
+			leaf os {
+				type operating-systems;
+			}
+			leaf phys-ad {
+				type mac-address;
+			}
+			leaf ctr-ip {
+				type ipv4-address;
+			}
+		}*/
+	}
+
+	augment /dv:devices {
+		when "device = 'lora-wan'";
+		container lora-wan-information {
+			leaf temp {
+				type string;
+			}
+		}
+	}
+
+	augment /dv:devices {
+		
+		when "device = 'access-point'";
+		container access-point {
+			list ap {
+				key uid;
+				
+				uses access-point;
+
+				leaf uid {
+					type uint32;
+				}
+
+			}
+		}
+
+	}
+
+	rpc hello {
+		input {
+			leaf hello {
+				type string;
+			}
+		}
+		output {
+			uses access-point;
+		}
+	}
+	rpc edit_config {
+		input {
+			leaf command {
+				type string;
+			}
+			leaf value {
+				type string;
+			}
+		}
+		output {
+			uses access-point;
+		}
+	}
+	
+	rpc get_config {
+		input {
+			leaf command {
+				type string;
+			}
+		}
+		output {
+			uses access-point;
+		}
+	}
+
+	rpc lock {
+		input {
+			leaf locking {
+				type boolean;
+			}
+		}
+		output {
+			leaf result {
+				type boolean;
+			}
+		}
+	}
+
+}
