@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2015 Open Networking Laboratory
+  ~ Copyright 2015-present Open Networking Laboratory
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<app name="khu.mclab.onosAPcontroller" origin="khu.mclab" version="1.0-SNAPSHOT"
-        featuresRepo="mvn:khu.mclab/apcontroller/1.0-SNAPSHOT/xml/features"
-        features="apcontroller" apps="">
-    <description>ONOS OSGi bundle archetype</description>
-    <artifact>mvn:khu.mclab/apcontroller/1.0-SNAPSHOT</artifact>
+<app name="khu.mclab.NcfGrpcClient" origin="khu.mclab" version="1.0-SNAPSHOT"
+        title="NcfGrpcClient" category="default" url="http://mobilelab.khu.ac.kr"
+        featuresRepo="mvn:khu.mclab/NCfGrpcClient/1.0-SNAPSHOT/xml/features"
+        features="NCfGrpcClient" apps="">
+    <description>APcontroller</description>
+    <artifact>mvn:khu.mclab/NCfGrpcClient/1.0-SNAPSHOT</artifact>
 </app>
