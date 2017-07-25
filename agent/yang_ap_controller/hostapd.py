@@ -37,7 +37,8 @@ class hostapd:
 
     def get_ip_address(self, ifname):
         if self.plat == 'Linux':
-            ip = os.popen('ip addr show eth0').read().split("inet ")[1].split("/")[0]
+            ip = os.popen('ip addr show ' + ifname).read().split("inet ")[1].split("/")[0]
+
         else:
             ip = '127.0.0.1'
         return ip
@@ -57,17 +58,19 @@ class hostapd:
             'ss' : 'set_ssid',
             'name' : 'set_ssid',
             'password' : 'set_password',
+            'pw' : 'set_password',
             'pwd' : 'set_password',
             'channel' : 'set_channel'
         }
 
         ### default configurable dictionary
         self.config_dict = {
-            'ssid': 'pqoqoqoqmfodqmfo',
+            'ssid': 'default_value',
             'ip': '127.0.0.1',
             'channel' : '1',
             'hw_mode' : 'g',
-            'power_on_off' : '0'
+            'power_on_off' : '0',
+            'password' : '0'
         }
 
 
@@ -147,6 +150,12 @@ class hostapd:
             { 'power_on_off' : value }
         )
 
+    def set_password(self, value):
+            self.config_dict['password'] = value
+            self.ap_listener.on_ap_changed(
+                {'password': value}
+            )
+
 
     def read_config(self):
         f = open('./openwinnet.conf', 'r')
@@ -178,11 +187,13 @@ class hostapd:
         import subprocess
 
         if self.plat == 'Linux':
+
             print(subprocess.getoutput("nmcli radio wifi off"))
             print(subprocess.getoutput("rfkill unblock wlan"))
             print(subprocess.getoutput("ifconfig wlan0 192.168.1.34 up"))
             print(subprocess.getoutput("dhcpd"))
             print(subprocess.getoutput("hostapd -dd " + self.path + " -B"))
+
 
             '''
             subprocess.run(['nmcli', 'radio', 'wifi', 'off'])
@@ -199,10 +210,8 @@ class hostapd:
     def stop(self):
         import subprocess
         if self.plat == 'Linux':
-            '''
-            subprocess.run(['skill', 'dhcpd'])
-            subprocess.run(['skill', 'hostapd'])
-            '''
+            print("temp_start");
+
             subprocess.getoutput("skill dhcpd")
             subprocess.getoutput("skill hostapd")
             self.is_starting = False
