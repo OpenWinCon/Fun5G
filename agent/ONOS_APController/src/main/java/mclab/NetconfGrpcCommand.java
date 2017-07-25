@@ -40,7 +40,7 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
     @Argument(index = 2, name = "value", description = "target ip or value", required = false, multiValued = false)
     private String arg2 = null;
     @Argument(index = 3, name = "value", description = "values", required = false, multiValued = false)
-    private String APpw = null;
+    private String arg3 = null;
 
     /*********************
 	 *
@@ -151,26 +151,40 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
     @Override
     protected void execute() {
 
-            service=get(NetconfGrpcService.class);
-            ap_list = service.getaplist();
-            commands = new HashMap<String, Commands>();
+        service=get(NetconfGrpcService.class);
+        ap_list = service.getaplist();
+        commands = new HashMap<String, Commands>();
 
 
-            commands.put("help", new Commands() {
-                public void invoke() {
-                    print("Netconf GRPC Client, version 0.1.0");
-                    print("");
-                    print("");
-                    print("Available commands:");
-                    print("help			Display this text");
-                    print("list			Show the connected NETCONF-GRPC servers");
-                    print("connect			Connect to a NETCONF-GRPC server (send <Hello> operation)");
-                    print("edit-config		Like NETCONF <edit-config> operation");
-                    print("get-config		Like NETCONF <get-config> operation");
-                    print("");
-                    print("");
+        commands.put("help", new Commands() {
+            public void invoke() {
+                print("Netconf GRPC Client, version 0.1.0");
+                print("");
+                print("");
+                print("Available commands:");
+                print("help			Display this text");
+                print("list			Show the connected NETCONF-GRPC servers");
+                print("connect			Connect to a NETCONF-GRPC server (send <Hello> operation)");
+                print("disconnect       Disconnect AP");
+                print("edit-config		Like NETCONF <edit-config> operation");
+                print("get-config		Like NETCONF <get-config> operation");
+                print("");
+                print("");
+            }
+        });
+
+        commands.put("list", new Commands() {
+            public void invoke() {
+                Iterator<String> mapIter = ap_list.keySet().iterator();
+                while(mapIter.hasNext()) {
+                    String host = mapIter.next();
+                    String value = ap_list.get(host).toString();
+
+                    print(host);
+                    print(value);
                 }
-            });
+            }
+        });
 
         commands.put("connect", new Commands() {
             public void invoke() {
@@ -204,6 +218,98 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
 
         });
 
+        commands.put("disconnect", new Commands() {
+            @Override
+            public void invoke() {
+                if(arg1 == null) {
+                    error("Should be type IP");
+                    return;
+                }
+
+                if(checkIP(arg1) == false) {
+                    error("IP is not correct");
+                    return;
+                }
+
+                String host = arg1;
+
+                if( ap_list.get(host) == null) {
+                    print("Does not exist AP in the list");
+                    return;
+                }
+                else {
+                    ap_list.get(host).shutdown();
+                    ap_list.remove(host);
+                    print("Success that removing AP from ap-list");
+                    return;
+                }
+            }
+        });
+
+        commands.put("edit-config", new Commands() {
+            public void invoke() {
+                if(arg1 == null) {
+                    error("Should be type IP");
+                    return;
+                }
+
+                if(checkIP(arg1) == false) {
+                    error("IP is not correct");
+                    return;
+                }
+
+                String host = arg1;
+                String command = arg2;
+                String value = arg3;
+
+                if( ap_list.get(host) == null) {
+                    print("You should first connect to the AP");
+                    return;
+                }
+                else {
+                    if(command == null || value == null)
+                    {
+                        print("You should enter command and values.");
+                    }
+                    ap_list.get(host).EditConfig(command, value);
+                    print(ap_list.get(host).toString());
+                    return;
+                }
+            }
+
+        });
+
+
+        commands.put("get-config", new Commands() {
+            public void invoke() {
+                if(arg1 == null) {
+                    error("Should be type IP");
+                    return;
+                }
+
+                if(checkIP(arg1) == false) {
+                    error("IP is not correct");
+                    return;
+                }
+
+                String host = arg1;
+
+                if( ap_list.get(host) == null) {
+                    print("You should first connect to the AP");
+                    return;
+                }
+                else {
+                    ap_list.get(host).GetConfig();
+                    print(ap_list.get(host).toString());
+                    return;
+                }
+            }
+
+        });
+
+
+        /*
+
         commands.put("milestone1", new Commands() {
             public void invoke() {
 
@@ -220,6 +326,7 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
             }
 
         });
+        */
 
 
         commands.get(cmd).invoke();

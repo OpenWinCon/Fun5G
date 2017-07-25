@@ -37,7 +37,7 @@ class hostapd:
 
     def get_ip_address(self, ifname):
         if self.plat == 'Linux':
-            ip = os.popen('ip addr show ' + ifname).read().split("inet ")[1].split("/")[0]
+            ip = os.popen('ip addr show eth0').read().split("inet ")[1].split("/")[0]
         else:
             ip = '127.0.0.1'
         return ip

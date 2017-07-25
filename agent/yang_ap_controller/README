@@ -1,0 +1,2 @@
+./goyang --format=proto ~/OpenWinNet/agent/yang_ap_controller/device_config.yang > ~/OpenWinNet/agent/yang_ap_controller/device_config.proto
+python -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. ./device_config.proto

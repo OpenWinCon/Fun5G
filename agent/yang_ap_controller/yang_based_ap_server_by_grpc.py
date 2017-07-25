@@ -66,28 +66,41 @@ class Configurer(device_config_pb2_grpc.DeviceConfigServicer):
             power_on_off=self.ap.power_on_off,
             ssid=self.ap.ssid,
             channel = self.ap.channel,
-            hw_mode = self.ap.hw_mode
+            hw_mode = self.ap.hw_mode,
+            password = self.ap.password
         )
 
 
     def EditConfig(self, request, context):
-        self.hostap._edit_config(request.command, request.value)
 
+        print("-------------------------")
+        print("Received Edit-config Request")
+        print("command: " + request.command + " value: " + request.value)
+        print("-------------------------")
+
+
+        self.hostap._edit_config(request.command, request.value)
 
         return device_config_pb2.EditConfigResponse(
             power_on_off=self.ap.power_on_off,
             ssid=self.ap.ssid,
             channel=self.ap.channel,
-            hw_mode=self.ap.hw_mode
+            hw_mode=self.ap.hw_mode,
+            password=self.ap.password
         )
 
     def GetConfig(self, request, context):
+        print("-------------------------")
+        print("Received Get-config Request")
+        print("-------------------------")
+
         return device_config_pb2.GetConfigResponse(
             ip=self.ap.ip,
             power_on_off=self.ap.power_on_off,
             ssid=self.ap.ssid,
             channel=self.ap.channel,
-            hw_mode=self.ap.hw_mode
+            hw_mode=self.ap.hw_mode,
+            password=self.ap.password
         )
 
 '''
@@ -96,8 +109,6 @@ class Configurer(device_config_pb2_grpc.DeviceConfigServicer):
 '''
 
 def serve():
-
-
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     device_config_pb2_grpc.add_DeviceConfigServicer_to_server(Configurer(), server)

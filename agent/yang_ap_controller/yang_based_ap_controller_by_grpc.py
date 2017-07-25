@@ -81,6 +81,7 @@ def run():
             print("SSID: %s" % reponse.ssid)
             print("channel: %s" % reponse.channel)
             print("mode: %s" % reponse.hw_mode)
+            print("password: %s" % reponse.password)
         elif cmd == 'edit' or cmd == 'edit_config':
             if cmd_list[2] is None or cmd_list[3] is None:
                 print("please enter value")
@@ -91,6 +92,7 @@ def run():
                 print("SSID: %s" % reponse.ssid)
                 print("channel: %s" % reponse.channel)
                 print("mode: %s" % reponse.hw_mode)
+                print("password: %s" % reponse.password)
 
 
 
@@ -152,7 +154,7 @@ def _edit_config(stub, in_command, in_value):
     print("Power: On")
     print("IP: %s" % response.ip)
     print("SSID: %s" % response.ssid)
-    print("password: openwincon_1")
+    print("password: %s" %response.password)
     print("channel: %s" % response.channel)
     print("mode: %s" % response.hw_mode)
     print("broadcasting: on")
@@ -169,7 +171,7 @@ def _hello(ip, port):
     print("Power: Off")
     print("IP: %s" % response.ip)
     print("SSID: %s" % response.ssid)
-    print("password: openwincon_1")
+    print("password: %s" %response.password)
     print("channel: %s" % response.channel)
     print("mode: %s" % response.hw_mode)
     print("broadcasting: on")

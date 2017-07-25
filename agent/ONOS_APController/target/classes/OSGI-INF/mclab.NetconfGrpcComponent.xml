@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="mclab.NetconfGrpcComponent" activate="activate" deactivate="deactivate">
-    <service servicefactory="false">
-        <provide interface="mclab.NetconfGrpcService"/>
-    </service>
-    <implementation class="mclab.NetconfGrpcComponent"/>
-</scr:component>

@@ -139,6 +139,11 @@ module device_config {
 		}
 	}
 
+	typedef t_password {
+		type string;
+	}
+
+
 	typedef command-type {
 		type enumeration {
 			enum mNULL {
@@ -161,13 +166,16 @@ module device_config {
 				type channel;
 			}
 			leaf power-on-off {
-				type channel;
+				type state;
 			}
 			leaf ssid {
 				type ssid;
 			}
 			leaf ip {
 				type ipv4-address;
+			}
+			leaf password {
+				type t_password;
 			}
 	}
 	

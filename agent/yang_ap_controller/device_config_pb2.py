@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='device_config.proto',
   package='device_config',
   syntax='proto3',
-  serialized_pb=_b('\n\x13\x64\x65vice_config.proto\x12\rdevice_config\"3\n\x11\x45\x64itConfigRequest\x12\x0f\n\x07\x63ommand\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"f\n\x12\x45\x64itConfigResponse\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x04 \x01(\t\x12\x0c\n\x04ssid\x18\x05 \x01(\t\"#\n\x10GetConfigRequest\x12\x0f\n\x07\x63ommand\x18\x01 \x01(\t\"e\n\x11GetConfigResponse\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x04 \x01(\t\x12\x0c\n\x04ssid\x18\x05 \x01(\t\"\x1d\n\x0cHelloRequest\x12\r\n\x05hello\x18\x01 \x01(\t\"a\n\rHelloResponse\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x04 \x01(\t\x12\x0c\n\x04ssid\x18\x05 \x01(\t\"\x1e\n\x0bLockRequest\x12\x0f\n\x07locking\x18\x01 \x01(\x08\"\x1e\n\x0cLockResponse\x12\x0e\n\x06result\x18\x01 \x01(\x08\"\xd8\x02\n\x07\x44\x65vices\x12\x38\n\x0c\x61\x63\x63\x65ss_point\x18\x01 \x01(\x0b\x32\".device_config.Devices.AccessPoint\x12G\n\x14lora_wan_information\x18\x02 \x01(\x0b\x32).device_config.Devices.LoraWanInformation\x1a\xa5\x01\n\x0b\x41\x63\x63\x65ssPoint\x12\x31\n\x02\x61p\x18\x01 \x03(\x0b\x32%.device_config.Devices.AccessPoint.Ap\x1a\x63\n\x02\x41p\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x04 \x01(\t\x12\x0c\n\x04ssid\x18\x05 \x01(\t\x12\x0b\n\x03uid\x18\x06 \x01(\r\x1a\"\n\x12LoraWanInformation\x12\x0c\n\x04temp\x18\x01 \x01(\t2\xb6\x02\n\x0c\x44\x65viceConfig\x12Q\n\nEditConfig\x12 .device_config.EditConfigRequest\x1a!.device_config.EditConfigResponse\x12N\n\tGetConfig\x12\x1f.device_config.GetConfigRequest\x1a .device_config.GetConfigResponse\x12\x42\n\x05Hello\x12\x1b.device_config.HelloRequest\x1a\x1c.device_config.HelloResponse\x12?\n\x04Lock\x12\x1a.device_config.LockRequest\x1a\x1b.device_config.LockResponseb\x06proto3')
+  serialized_pb=_b('\n\x13\x64\x65vice_config.proto\x12\rdevice_config\"3\n\x11\x45\x64itConfigRequest\x12\x0f\n\x07\x63ommand\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"x\n\x12\x45\x64itConfigResponse\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x05 \x01(\t\x12\x0c\n\x04ssid\x18\x06 \x01(\t\"#\n\x10GetConfigRequest\x12\x0f\n\x07\x63ommand\x18\x01 \x01(\t\"w\n\x11GetConfigResponse\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x05 \x01(\t\x12\x0c\n\x04ssid\x18\x06 \x01(\t\"\x1d\n\x0cHelloRequest\x12\r\n\x05hello\x18\x01 \x01(\t\"s\n\rHelloResponse\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x05 \x01(\t\x12\x0c\n\x04ssid\x18\x06 \x01(\t\"\x1e\n\x0bLockRequest\x12\x0f\n\x07locking\x18\x01 \x01(\x08\"\x1e\n\x0cLockResponse\x12\x0e\n\x06result\x18\x01 \x01(\x08\"\xea\x02\n\x07\x44\x65vices\x12\x38\n\x0c\x61\x63\x63\x65ss_point\x18\x01 \x01(\x0b\x32\".device_config.Devices.AccessPoint\x12G\n\x14lora_wan_information\x18\x02 \x01(\x0b\x32).device_config.Devices.LoraWanInformation\x1a\xb7\x01\n\x0b\x41\x63\x63\x65ssPoint\x12\x31\n\x02\x61p\x18\x01 \x03(\x0b\x32%.device_config.Devices.AccessPoint.Ap\x1au\n\x02\x41p\x12\x0f\n\x07\x63hannel\x18\x01 \x01(\t\x12\x0f\n\x07hw_mode\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\x12\x14\n\x0cpower_on_off\x18\x05 \x01(\t\x12\x0c\n\x04ssid\x18\x06 \x01(\t\x12\x0b\n\x03uid\x18\x07 \x01(\r\x1a\"\n\x12LoraWanInformation\x12\x0c\n\x04temp\x18\x01 \x01(\t2\xb6\x02\n\x0c\x44\x65viceConfig\x12Q\n\nEditConfig\x12 .device_config.EditConfigRequest\x1a!.device_config.EditConfigResponse\x12N\n\tGetConfig\x12\x1f.device_config.GetConfigRequest\x1a .device_config.GetConfigResponse\x12\x42\n\x05Hello\x12\x1b.device_config.HelloRequest\x1a\x1c.device_config.HelloResponse\x12?\n\x04Lock\x12\x1a.device_config.LockRequest\x1a\x1b.device_config.LockResponseb\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -93,15 +93,22 @@ _EDITCONFIGRESPONSE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='power_on_off', full_name='device_config.EditConfigResponse.power_on_off', index=3,
+      name='password', full_name='device_config.EditConfigResponse.password', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='ssid', full_name='device_config.EditConfigResponse.ssid', index=4,
+      name='power_on_off', full_name='device_config.EditConfigResponse.power_on_off', index=4,
       number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='ssid', full_name='device_config.EditConfigResponse.ssid', index=5,
+      number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -119,7 +126,7 @@ _EDITCONFIGRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=91,
-  serialized_end=193,
+  serialized_end=211,
 )
 
 
@@ -149,8 +156,8 @@ _GETCONFIGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=195,
-  serialized_end=230,
+  serialized_start=213,
+  serialized_end=248,
 )
 
 
@@ -183,15 +190,22 @@ _GETCONFIGRESPONSE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='power_on_off', full_name='device_config.GetConfigResponse.power_on_off', index=3,
+      name='password', full_name='device_config.GetConfigResponse.password', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='ssid', full_name='device_config.GetConfigResponse.ssid', index=4,
+      name='power_on_off', full_name='device_config.GetConfigResponse.power_on_off', index=4,
       number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='ssid', full_name='device_config.GetConfigResponse.ssid', index=5,
+      number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -208,8 +222,8 @@ _GETCONFIGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=232,
-  serialized_end=333,
+  serialized_start=250,
+  serialized_end=369,
 )
 
 
@@ -239,8 +253,8 @@ _HELLOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=335,
-  serialized_end=364,
+  serialized_start=371,
+  serialized_end=400,
 )
 
 
@@ -273,15 +287,22 @@ _HELLORESPONSE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='power_on_off', full_name='device_config.HelloResponse.power_on_off', index=3,
+      name='password', full_name='device_config.HelloResponse.password', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='ssid', full_name='device_config.HelloResponse.ssid', index=4,
+      name='power_on_off', full_name='device_config.HelloResponse.power_on_off', index=4,
       number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='ssid', full_name='device_config.HelloResponse.ssid', index=5,
+      number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -298,8 +319,8 @@ _HELLORESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=366,
-  serialized_end=463,
+  serialized_start=402,
+  serialized_end=517,
 )
 
 
@@ -329,8 +350,8 @@ _LOCKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=465,
-  serialized_end=495,
+  serialized_start=519,
+  serialized_end=549,
 )
 
 
@@ -360,8 +381,8 @@ _LOCKRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=497,
-  serialized_end=527,
+  serialized_start=551,
+  serialized_end=581,
 )
 
 
@@ -394,22 +415,29 @@ _DEVICES_ACCESSPOINT_AP = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='power_on_off', full_name='device_config.Devices.AccessPoint.Ap.power_on_off', index=3,
+      name='password', full_name='device_config.Devices.AccessPoint.Ap.password', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='ssid', full_name='device_config.Devices.AccessPoint.Ap.ssid', index=4,
+      name='power_on_off', full_name='device_config.Devices.AccessPoint.Ap.power_on_off', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='uid', full_name='device_config.Devices.AccessPoint.Ap.uid', index=5,
-      number=6, type=13, cpp_type=3, label=1,
+      name='ssid', full_name='device_config.Devices.AccessPoint.Ap.ssid', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='uid', full_name='device_config.Devices.AccessPoint.Ap.uid', index=6,
+      number=7, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -426,8 +454,8 @@ _DEVICES_ACCESSPOINT_AP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=739,
-  serialized_end=838,
+  serialized_start=793,
+  serialized_end=910,
 )
 
 _DEVICES_ACCESSPOINT = _descriptor.Descriptor(
@@ -456,8 +484,8 @@ _DEVICES_ACCESSPOINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=673,
-  serialized_end=838,
+  serialized_start=727,
+  serialized_end=910,
 )
 
 _DEVICES_LORAWANINFORMATION = _descriptor.Descriptor(
@@ -486,8 +514,8 @@ _DEVICES_LORAWANINFORMATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=840,
-  serialized_end=874,
+  serialized_start=912,
+  serialized_end=946,
 )
 
 _DEVICES = _descriptor.Descriptor(
@@ -523,8 +551,8 @@ _DEVICES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=530,
-  serialized_end=874,
+  serialized_start=584,
+  serialized_end=946,
 )
 
 _DEVICES_ACCESSPOINT_AP.containing_type = _DEVICES_ACCESSPOINT

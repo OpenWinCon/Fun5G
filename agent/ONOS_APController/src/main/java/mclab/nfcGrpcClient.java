@@ -52,8 +52,6 @@ public class nfcGrpcClient {
         channel = channelBuilder.build();
         blockingStub = DeviceConfigGrpc.newBlockingStub(channel);
         isExist = this.Hello();
-        channel.shutdown();
-
     }
 
 
@@ -67,6 +65,26 @@ public class nfcGrpcClient {
     }
 
     private void update(HelloResponse response) {
+
+        IP = response.getIp();
+        SSID = response.getSsid();
+        Channel = response.getChannel();
+        HW_mode=response.getHwMode();
+        on = response.getPowerOnOff();
+
+    }
+
+    private void update(EditConfigResponse response) {
+
+        IP = response.getIp();
+        SSID = response.getSsid();
+        Channel = response.getChannel();
+        HW_mode=response.getHwMode();
+        on = response.getPowerOnOff();
+
+    }
+
+    private void update(GetConfigResponse response) {
 
         IP = response.getIp();
         SSID = response.getSsid();
@@ -111,9 +129,8 @@ public class nfcGrpcClient {
     public boolean checkExist() { return isExist; }
 
 
-
-    public void shutdown() throws InterruptedException {
-        channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+    public void shutdown() {
+        channel.shutdown();
     }
 
 
@@ -131,6 +148,36 @@ public class nfcGrpcClient {
         update(response);
         return true;
     }
+
+    public boolean EditConfig(String command, String value) {
+        EditConfigRequest request = EditConfigRequest.newBuilder().setCommand(command).setValue(value).build();
+        EditConfigResponse response;
+
+        try {
+            response = blockingStub.editConfig(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return false;
+        }
+        update(response);
+        return true;
+    }
+
+    public boolean GetConfig() {
+        GetConfigRequest request = GetConfigRequest.newBuilder().setCommand("get").build();
+        GetConfigResponse response;
+
+        try {
+            response = blockingStub.getConfig(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return false;
+        }
+        update(response);
+        return true;
+    }
+
+
 
 
 
