@@ -151,14 +151,14 @@
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-okhttp</artifactId>
-            <version>1.2.0</version>
+            <version> 1.0.0</version>
             <scope>provided</scope>  
         </dependency>
 
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.2.0</version>
+            <version> 3.2.0</version>
         </dependency>
 
         <dependency>
@@ -231,7 +231,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-common</artifactId>
-            <version>${grpc.netty.version}</version>
+            <version> ${grpc.netty.version}</version>
         </dependency>
     </dependencies>
 

@@ -7,5 +7,5 @@ import java.util.concurrent.ConcurrentMap;
  */
 public interface NetconfGrpcService {
 
-    ConcurrentMap<String, nfcGrpcClient> getaplist();
+    ConcurrentMap<String, ncfGrpcClient> getaplist();
 }

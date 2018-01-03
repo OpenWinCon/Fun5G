@@ -1,0 +1,73 @@
+---
+- hosts: all
+  user: ceph
+  #task list
+  tasks:
+   - name: test connection
+     ping:
+     become_method: sudo
+
+#   - name: apt-get update
+#     apt:
+#        update_cache: yes
+#     become_method: sudo
+
+   - name: Install iw
+     apt: 
+      name: iw
+      state: present
+     become_method: sudo
+
+   - name: Install hostapd 
+     apt: 
+      name: hostapd
+      state: present
+     become_method: sudo
+
+   - name: Install dhcp server
+     apt: 
+      name: isc-dhcp-server
+      state: present
+     become_method: sudo
+
+   - name: Install git
+     apt: 
+      name: git
+      state: present
+     become_method: sudo
+
+   - name: Install mysql-client
+     apt: 
+      name: mysql-client
+      state: present
+     become_method: sudo
+
+   - name: Install libmysqlclient-dev
+     apt: 
+      name: libmysqlclient-dev
+      state: present
+     become_method: sudo
+
+   - name: Install openvswitch-switch
+     apt: 
+      name: openvswitch-switch
+      state: present
+     become_method: sudo
+
+   - name: Install openvswitch-common
+     apt: 
+      name: openvswitch-common
+      state: present
+     become_method: sudo
+
+   - name: Clone ap agent
+     git:
+      repo: https://github.com/openwincon/fun5g.git
+      dest: /etc/fun5g
+      version: HEAD
+      force: yes
+     become_method: sudo
+
+
+
+

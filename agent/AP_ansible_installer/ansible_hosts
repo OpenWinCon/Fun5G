@@ -1,0 +1,5 @@
+# ansible_hosts
+163.180.118.45 ansible_ssh_user=ceph ansible_ssh_port=22
+163.180.118.60 ansible_ssh_user=ceph ansible_ssh_port=22
+163.180.118.62 ansible_ssh_user=ceph ansible_ssh_port=22
+

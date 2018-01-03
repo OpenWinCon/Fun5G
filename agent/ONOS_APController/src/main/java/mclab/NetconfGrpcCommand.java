@@ -19,11 +19,8 @@ package mclab;
 import org.apache.karaf.shell.commands.Command;
 import org.onosproject.cli.AbstractShellCommand;
 import org.apache.karaf.shell.commands.Argument;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 
@@ -44,7 +41,7 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
 
     /*********************
 	 *
-	 * Client Dictonary Format : ( IP : nfcGrpcClient? or SSID? ) -> DB?
+	 * Client Dictonary Format : ( IP : ncfGrpcClient? or SSID? ) -> DB?
 	 *
 	 * Hello operation flow : MAKE OBJECT -> Hello Operation -> if the connecting is success, add dictonary,
 	 * if not, failed return -> Show currnet Config { IP, SSID, PASSWORD, ... }
@@ -64,7 +61,7 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
 
     private Map<String, Commands> commands;
 
-    protected ConcurrentMap<String, nfcGrpcClient> ap_list;
+    protected ConcurrentMap<String, ncfGrpcClient> ap_list;
 
 
 
@@ -199,20 +196,24 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
                 }
 
                 String host = arg1;
+                print("")
 
                 if( ap_list.get(host) != null) {
                     print("already connected");
                     return;
                 }
                 else {
-                    nfcGrpcClient client = new nfcGrpcClient(host, 50051);
-                    ap_list.put(host, client);
+                    ncfGrpcClient client = new ncfGrpcClient(host, 50051);
+
                     if( client.checkExist() == false ) {
-                        error("Client is not exist");
+                        error("Client does not exist");
                         return;
                     }
-                    print(client.toString());
-                    return;
+                    else {
+                        ap_list.put(host, client);
+                        print(client.toString());
+                        return;
+                    }
                 }
             }
 
@@ -313,10 +314,10 @@ public class NetconfGrpcCommand extends AbstractShellCommand {
         commands.put("milestone1", new Commands() {
             public void invoke() {
 
-                ConcurrentMap<String, nfcGrpcClient> milestone_list = new ConcurrentHashMap<String, nfcGrpcClient>();
+                ConcurrentMap<String, ncfGrpcClient> milestone_list = new ConcurrentHashMap<String, ncfGrpcClient>();
 
                 for( int i = 0; i < 1000; i++) {
-                    nfcGrpcClient client = new nfcGrpcClient("163.180.118.62",50051, "formilestones");
+                    ncfGrpcClient client = new ncfGrpcClient("163.180.118.62",50051, "formilestones");
                     milestone_list.put(String.valueOf(i), client);
                 }
                 for( int i = 0; i < 1000; i++) {
