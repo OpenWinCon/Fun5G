@@ -21,7 +21,7 @@ fun5g can build a centralized network-based SDN / NFV leverage open source softw
 
 [ACconnector](https://github.com/OpenWinCon/ACconnector)
 
-[PiSTA_SKKU_NTL](https://github.com/OpenWinCon/PiSTA_0SKKU_NTL)
+[PiSTA_SKKU_NTL](https://github.com/OpenWinCon/PiSTA_SKKU_NTL)
 
 [IPv6-host-mobility-management](https://github.com/OpenWinCon/IPv6-host-mobility-management)
 
